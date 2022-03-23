@@ -4,7 +4,7 @@ const Home = () => {
 
     return (
         <>
-        <h1 className="text-[90px] font-bold underline">home</h1>
+        <h1 className="text-[80px] font-bold underline">home</h1>
         </>
     )
 }
