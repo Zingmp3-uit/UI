@@ -4,12 +4,13 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import './App.css';
 import React from 'react';
+//pages
 import Home from '../src/pages/Home'
 import Singer from '../src/pages/Singer'
 import Album from '../src/pages/Album'
 import MusicVideo from '../src/pages/MusicVideo'
-
 // const component
 import Header from '../src/components/ConstComponent/Header'
 import SideBar from '../src/components/ConstComponent/SideBar'
@@ -35,6 +36,10 @@ const configComponent = (component) => {
 }
 let path = [
     {
+        path: '/',
+        component: configComponent(<Home />)
+    },
+    {
         path: '/singer',
         component: configComponent(<Singer />)
     },
@@ -42,17 +47,13 @@ let path = [
         path: '/album',
         component: configComponent(<Album />)
     },
-    {
-        path: '/music-video',
-        component: configComponent(<MusicVideo />)
-    },
 ]
 
 
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/music-video" element={<MusicVideo />} />
             {path.map((item, index) => {
                 return (
                     <Route path={item.path} element={item.component} key={index} />
