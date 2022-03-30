@@ -21,12 +21,12 @@ const configComponent = (component) => {
 
     return (
         <div>
-            <Header />
-            <div>
+            <SideBar />
+            <div className="ml-[200px]">
                 <div>
-                    <SideBar />
+                    <Header />
                 </div>
-                <div>
+                <div className="mt-[60px]">
                     {component}
                 </div>
             </div>
