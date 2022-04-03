@@ -1,10 +1,11 @@
-
-
+import Personal from '../components/Personal'
 const Home = () => {
 
     return (
         <>
-            <h1 className="text-[80px] font-bold underline">home</h1>
+            <div>
+                <Personal />
+            </div>
         </>
     )
 }
