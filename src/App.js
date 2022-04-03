@@ -30,7 +30,7 @@ const configComponent = (component) => {
                     {component}
                 </div>
             </div>
-            {/* <PlayMusic /> */}
+            <PlayMusic />
         </div>
     )
 }
