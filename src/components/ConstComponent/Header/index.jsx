@@ -23,8 +23,8 @@ const Header = () => {
                 </span>
             </div>
             <div className='flex items-center'>
-                <PublishIcon className='rounded-full w-11 hover:bg-[#170f23] p-1 mx-2 border border-2 border-[#170f23]' style={{ fontSize: '40px' }} />
-                <SettingsIcon className='rounded-full w-11 hover:bg-[#170f23] p-1 mx-2 border border-2 border-[#170f23]' style={{ fontSize: '40px' }} />
+                <PublishIcon className='rounded-full w-11 hover:bg-[#170f23] p-1 mx-2  border-2 border-[#170f23]' style={{ fontSize: '40px' }} />
+                <SettingsIcon className='rounded-full w-11 hover:bg-[#170f23] p-1 mx-2  border-2 border-[#170f23]' style={{ fontSize: '40px' }} />
                 <img src={avatar} alt="" className='rounded-full w-[40px] hover:bg-[#170f23] mx-2' />
             </div>
         </div>
