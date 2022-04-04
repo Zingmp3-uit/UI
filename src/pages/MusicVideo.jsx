@@ -1,4 +1,4 @@
-import avatar from '../assets/avatar.jpg'
+import avatar from '../assets/avatar.png'
 import { useState } from 'react'
 // mui, npm package
 import Switch from '@material-ui/core/Switch';
