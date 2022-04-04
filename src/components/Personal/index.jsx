@@ -164,7 +164,7 @@ const Personal = () => {
 
     return (
         <React.Fragment>
-            <div className="bg-[#170f23]">
+            <div className="w-full h-full bg-[#170f23]">
                 <div className="pt-[70px] pl-[60px] pr-[60px] ">
                     <div className="flex flex-row items-center">
                         <h2 className="text-[36px] font-bold leading-9 mr-[16px]">Thư viện</h2>
