@@ -26,7 +26,7 @@ const configComponent = (component) => {
                 <div>
                     <Header />
                 </div>
-                <div className="mt-[60px]">
+                <div className="mt-[60px] mb-[80px]">
                     {component}
                 </div>
             </div>

@@ -13,13 +13,13 @@ const Header = () => {
 
 
     return (
-        <div className='fixed top-0 right-0 left-[200px] shadow-xl h-[60px]  bg-[#b39ed1] text-white flex items-center justify-between px-4 z-10'>
+        <div className='fixed top-0 right-0 left-[200px] shadow-xl h-[60px]  bg-[#170f23] text-white flex items-center justify-between px-4 z-10'>
             <div className='flex items-center'>
                 <ArrowBackIcon className='rounded-full hover:bg-[#170f23] p-1 mx-1' style={{ fontSize: '40px' }} />
                 <ArrowForwardIcon className='rounded-full hover:bg-[#170f23] p-1 mx-1' style={{ fontSize: '40px' }} />
                 <span className='bg-[#2f2739] py-1 rounded-3xl px-2'>
                     <SearchIcon />
-                    <input type="text" className='bg-transparent w-[600px] m-2' style={{ outline: 'none' }} placeholder='Nhập tên bài hát, nghệ sĩ, hoặc MV ...' />
+                    <input type="text" className='bg-transparent w-[800px] m-2' style={{ outline: 'none' }} placeholder='Nhập tên bài hát, nghệ sĩ, hoặc MV ...' />
                 </span>
             </div>
             <div className='flex items-center'>
