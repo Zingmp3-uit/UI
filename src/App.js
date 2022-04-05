@@ -11,6 +11,7 @@ import Home from '../src/pages/Home'
 import Singer from '../src/pages/Singer'
 import Album from '../src/pages/Album'
 import MusicVideo from '../src/pages/MusicVideo'
+import Chart from '../src/pages/Chart'
 // const component
 import Header from '../src/components/ConstComponent/Header'
 import SideBar from '../src/components/ConstComponent/SideBar'
@@ -30,7 +31,7 @@ const configComponent = (component) => {
                     {component}
                 </div>
             </div>
-            {/* <PlayMusic /> */}
+            <PlayMusic />
         </div>
     )
 }
@@ -46,6 +47,10 @@ let path = [
     {
         path: '/album',
         component: configComponent(<Album />)
+    },
+    {
+        path: '/chart',
+        component: configComponent(<Chart />)
     },
 ]
 
