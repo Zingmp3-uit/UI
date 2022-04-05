@@ -48,8 +48,6 @@ const SideBar = () => {
                     <p className='text-[18px] font-semibold'>MV</p>
                 </div>
             </div>
-            <p>something here</p>
-            <p>not code in component</p>
         </div>
     )
 }

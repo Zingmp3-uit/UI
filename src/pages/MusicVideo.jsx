@@ -11,9 +11,6 @@ import YouTube from 'react-youtube';
 import ItemMusicVideo from '../components/ItemMusicVideo';
 import ItemVideo from '../components/ItemVideo'
 
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
-
 
 const MusicVideo = () => {
     const [idVideo, setIdVideo] = useState('j5A461KptQ0')
@@ -65,14 +62,7 @@ const MusicVideo = () => {
                 <ItemVideo />
             </div>
             <br />
-            <div>
-                <AudioPlayer
-                    autoPlay
-                    src={'https://vnso-zn-23-tf-mp3-s1-m-zmp3.zadn.vn/ea859fb645f2acacf5e3/2153293163773944052?authen=exp=1649319583~acl=/ea859fb645f2acacf5e3/*~hmac=178f8c944edd204ec6aff0f783bc6d10&fs=MTY0OTE0NjmUsIC4MzMyMHx3ZWJWNHwxMTMdUngMTYxLjY2LjEwMA'}
-                    onPlay={e => console.log("onPlay")}
-                // other props here
-                />
-            </div>
+            
             <div>
                 <p>hi</p>
                 <p>hi</p>
