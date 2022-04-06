@@ -24,7 +24,8 @@ const PlayMusic = () => {
                 <div className=' col-span-2' >
                     <AudioPlayer
                         autoPlay
-                        src={'https://vnso-zn-23-tf-mp3-s1-m-zmp3.zadn.vn/ea859fb645f2acacf5e3/2153293163773944052?authen=exp=1649319583~acl=/ea859fb645f2acacf5e3/*~hmac=178f8c944edd204ec6aff0f783bc6d10&fs=MTY0OTE0NjmUsIC4MzMyMHx3ZWJWNHwxMTMdUngMTYxLjY2LjEwMA'}
+                        // src={'https://vnso-zn-23-tf-mp3-s1-m-zmp3.zadn.vn/ea859fb645f2acacf5e3/2153293163773944052?authen=exp=1649319583~acl=/ea859fb645f2acacf5e3/*~hmac=178f8c944edd204ec6aff0f783bc6d10&fs=MTY0OTE0NjmUsIC4MzMyMHx3ZWJWNHwxMTMdUngMTYxLjY2LjEwMA'}
+                        src={"https://mp3-s1-m-zmp3.zmdcdn.me/6731093be67f0f21566e/6049904722492867532?authen=exp=1649410187~acl=/6731093be67f0f21566e/*~hmac=5c536eb9183396deb5d9727015889000&fs=MTY0OTIzNzM4NzYwOXx3ZWJWNHw0Mi4xMTYdUngNjgdUngMjE3"}
                         onPlay={e => console.log("onPlay")}
                         style={{  backgroundColor: '#120c1c' ,width:'100%'}}
                         // other props here

@@ -50,15 +50,17 @@ const ItemVideo = () => {
                 itemVideo.map((item, index) => (
                     <Card Card className='w-[300px] m-2' >
                         <CardActionArea>
-                            <CardMedia
-                                component="img"
-                                alt="Contemplative Reptile"
-                                // height="100"     
-                                width="100%"
-                                image="https://i.ytimg.com/vi/esECWv9Jwfs/maxresdefault.jpg"
-                                title="Contemplative Reptile"
-                            />
-                               
+                            <div className='bg-[#170f23] relative'>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="100%"     
+                                    width="100%"
+                                    image="https://i.ytimg.com/vi/esECWv9Jwfs/maxresdefault.jpg"
+                                    title="Contemplative Reptile"
+                                />
+                                <span className='bg-[rgba(255,255,255,0.2)] px-1 rounded-md absolute bottom-0 right-[10px] text-white'>5:30</span>
+                            </div>
                             <CardContent className='grid grid-cols-5  bg-[#170f23] text-white'>
                                 <CardMedia
                                     component="img"
