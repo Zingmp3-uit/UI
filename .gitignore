@@ -26,4 +26,4 @@ yarn-error.log*
 
 
 #config taillwind
-./src/style/main.css
+./src/style
