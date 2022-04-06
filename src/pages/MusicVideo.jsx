@@ -1,4 +1,4 @@
-import avatar from '../assets/avatar.jpg'
+import avatar from '../assets/avatar.png'
 import { useState } from 'react'
 // mui, npm package
 import Switch from '@material-ui/core/Switch';
@@ -54,7 +54,7 @@ const MusicVideo = () => {
                         ></iframe>
                     </div>
                     <div className='col-span-1 p-2  w-full h-[500px]'>
-                        <ItemMusicVideo idVideo={idVideo} setIdVideo={setIdVideo}/>
+                        <ItemMusicVideo idVideo={idVideo} setIdVideo={setIdVideo} />
                     </div>
                 </div>
             </div>
@@ -62,6 +62,7 @@ const MusicVideo = () => {
                 <ItemVideo />
             </div>
             <br />
+            
             <div>
                 <p>hi</p>
                 <p>hi</p>
