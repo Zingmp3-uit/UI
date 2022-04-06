@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+
+#config taillwind
+/src/style
 # testing
 /coverage
 
@@ -24,6 +27,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-#config taillwind
-./src/style
