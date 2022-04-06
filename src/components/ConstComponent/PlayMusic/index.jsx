@@ -12,7 +12,7 @@ const PlayMusic = () => {
 
 
     return (
-        <div className='fixed bottom-0 right-0 left-0 border-t-[0.5px] border-white  bg-[#120c1c] z-10 h-[80px]'>
+        <div className='fixed bottom-0 right-0 left-0 border-t-[0.5px] border-[#2a213a]  bg-[#120c1c] z-10 h-[80px]'>
             <div className='w-full max-w-full	grid grid-cols-4'>
                 <div className='flex items-center col-span-1 ml-3'>
                     <img src={avatar} alt="" className='w-[50px] h-[50px] rounded-full mr-3 rotate '/>
