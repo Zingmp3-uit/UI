@@ -7,7 +7,7 @@
 
 
 #config taillwind
-/src/style
+/src/style/main.css 
 # testing
 /coverage
 
