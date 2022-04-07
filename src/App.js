@@ -7,14 +7,12 @@ import {
 import './App.css';
 import React from 'react';
 //pages
-import Home from '../src/pages/Home'
 import Singer from '../src/pages/Singer'
 import Album from '../src/pages/Album'
 import MusicVideo from '../src/pages/MusicVideo'
-import Chart from '../src/pages/Chart'
 //home pages
+import Discover from './pages/HomePages/Discover'
 import Category from '../src/pages/HomePages/Category'
-import Discover from '../src/pages/HomePages/Discover'
 import MV from '../src/pages/HomePages/MV'
 import NewMusic from '../src/pages/HomePages/NewMusic'
 import Personal from '../src/pages/HomePages/Personal'
@@ -46,10 +44,6 @@ const configComponent = (component) => {
 }
 let path = [
     {
-        path: '/',
-        component: configComponent(<Home />)
-    },
-    {
         path: '/singer',
         component: configComponent(<Singer />)
     },
@@ -57,17 +51,13 @@ let path = [
         path: '/album',
         component: configComponent(<Album />)
     },
-    {
-        path: '/chart',
-        component: configComponent(<Chart />)
-    },
     // ===================================================  home pages    ==============================================
     {
         path: '/category',
         component: configComponent(<Category />)
     },
     {
-        path: '/discover',
+        path: '/',
         component: configComponent(<Discover />)
     },
     {

@@ -31,7 +31,7 @@ const SideBar = () => {
         },
         {
             title: 'Khám phá',
-            path: '/discover',
+            path: '/',
             icon: <AlbumIcon className={classes.icon} />,
         },
         {
