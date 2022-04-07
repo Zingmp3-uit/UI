@@ -5,6 +5,7 @@ import './config/global';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
+import ZingAPI from '../src/context/zing.context'
 
 ReactDOM.render(
     <React.StrictMode>
