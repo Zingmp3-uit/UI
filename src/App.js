@@ -61,6 +61,10 @@ let path = [
         component: configComponent(<Discover />)
     },
     {
+        path: '/mv/:id',
+        component: configComponent(<MV />)
+    },
+    {
         path: '/mv',
         component: configComponent(<MV />)
     },
