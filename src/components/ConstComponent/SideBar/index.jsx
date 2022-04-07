@@ -56,7 +56,7 @@ const SideBar = () => {
         },
         {
             title: 'MV',
-            path: '/music-video',
+            path: '/mv',
             icon: <MovieIcon className={classes.icon} />,
         },
     ]
