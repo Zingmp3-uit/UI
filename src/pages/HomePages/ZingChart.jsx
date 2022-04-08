@@ -100,7 +100,7 @@ const ZingChart = () => {
     ])
     
     return (
-        <div>
+        <React.Fragment>
             <div className="w-full h-full bg-[#170f23]">
                 <div className="relative">
                     <img className="w-full object-cover" src="https://zjs.zadn.vn/zmp3-desktop/releases/v1.6.14/static/media/bg-chart.fd766403.jpg" alt="" />
@@ -292,7 +292,7 @@ const ZingChart = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

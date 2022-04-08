@@ -23,6 +23,7 @@ import ZingChart from '../src/pages/HomePages/ZingChart'
 import Header from '../src/components/ConstComponent/Header'
 import SideBar from '../src/components/ConstComponent/SideBar'
 import PlayMusic from '../src/components/ConstComponent/PlayMusic'
+import OverLayer  from "./components/Overlayer";
 
 
 const configComponent = (component) => {
@@ -36,6 +37,7 @@ const configComponent = (component) => {
                 </div>
                 <div className="mt-[60px] mb-[80px] ">
                     {component}
+                    <OverLayer />
                 </div>
             </div>
             <PlayMusic />
