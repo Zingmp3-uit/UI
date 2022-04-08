@@ -1,5 +1,7 @@
+import ZingAPI from "../context/zing.context";
 import avatar from '../assets/avatar.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 // mui, npm package
 import Switch from '@material-ui/core/Switch';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -11,20 +13,40 @@ import YouTube from 'react-youtube';
 import ItemMusicVideo from '../components/ItemMusicVideo';
 import ItemVideo from '../components/ItemVideo'
 
+const api = new ZingAPI();
+
 
 const MusicVideo = () => {
-    const [idVideo, setIdVideo] = useState('j5A461KptQ0')
+    const [dataMV, setDataMV] = useState('')
+    const [recommendMV, setRecommendMV] = useState([])
+    const [urlVideo, setUrlVideo] = useState('')
 
+    useEffect(async () => {
+        await api.getVideo(window.location.pathname.split('/')[2]).then((data) => {
+            let list = data.data.data
+            console.log(list);
+            setDataMV(list)
+            setRecommendMV(list.recommends)
+            setUrlVideo(list.streaming.mp4['720p'])
+        })
+    }, [window.location.href])
 
 
     return (
         <div style={{ backgroundColor: '#170f23' }}>
-            <div className='flex justify-between w-full p-5 '>
+            <div className='flex justify-between w-full p-5 px-10 '>
                 <div className='flex items-center'>
-                    <img src={avatar} alt="" height='100px' className='rounded-full w-12' />
+                    <img src={dataMV.artist?.thumbnail} alt="" className='rounded-full h-[60px] w-[60px] ' />
                     <div className='mx-2'>
-                        <p>Túp lều vàng</p>
-                        <p>Nguyễn đình vũ</p>
+                        <p className="text-[20px] font-semibold">{dataMV.title}</p>
+                        <p className='text-[13px]'>
+                            {dataMV.artists ? dataMV.artists.map((artist, i) => (
+                                <span key={i} className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                    <Link to='' >{artist.name}</Link>
+                                    {i !== dataMV.artists.length - 1 ? <span className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
+                                </span>
+                            )) : null}
+                        </p>
                     </div>
                     <span className='border-solid border-2 rounded-full border-zinc-700 p-2 mx-2'>
                         <FavoriteBorderIcon />
@@ -42,33 +64,21 @@ const MusicVideo = () => {
                     </span>
                 </div>
             </div>
-            <div className='p-4 '>
+            <div className='px-4 '>
                 <div className='grid grid-cols-4 h-full'>
                     <div className='col-span-3 p-4 h-[500px]'>
-                        <iframe
-                            style={{ borderRadius: '10px' }}
-                            className='h-full w-full'
-                            src={`https://www.youtube.com/embed/${idVideo}?autoplay=1&enablejsapi=0&modestbranding=1&rel=0`}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        ></iframe>
+                        <video width="400" controls autoPlay className='h-full w-full border-[1px] border-slate-500'>
+                            <source src={urlVideo} type="video/mp4"/>
+                        </video>
                     </div>
                     <div className='col-span-1 p-2  w-full h-[500px]'>
-                        <ItemMusicVideo idVideo={idVideo} setIdVideo={setIdVideo} />
+                        <ItemMusicVideo props={{ recommendMV }} />
                     </div>
                 </div>
             </div>
             <div>
-                <ItemVideo />
+                <ItemVideo props={{ recommendMV }} />
             </div>
-            <br />
-            
-            <div>
-                <p>hi</p>
-                <p>hi</p>
-                <p>hi</p>
-            </div>
-
         </div>
     )
 }

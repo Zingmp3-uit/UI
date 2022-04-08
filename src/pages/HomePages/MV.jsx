@@ -45,6 +45,7 @@ const MV = () => {
             setCategory(data.data.data.childs)
         })
         await api.getListMV(codeId, "1", "20").then((data) => {
+            console.log(data.data);
             setMv(data.data.data.items)
         })
     }, [codeId])
@@ -55,7 +56,7 @@ const MV = () => {
     }, [selectItem])
 
     useEffect(async () => {
-       setCodeId(window.location.pathname.split('/')[2])
+        setCodeId(window.location.pathname.split('/')[2])
     }, [window.location.pathname])
 
     const handleChangeSelectItem = (event, newValue) => {
@@ -95,15 +96,17 @@ const MV = () => {
                 {mv.map((item, index) => (
                     <div className='w-full m-2  bg-[#170f23] px-5' key={index}>
                         <div className=' relative'>
-                            <CardMedia
-                                component="img"
-                                alt="Contemplative Reptile"
-                                height="100%"
-                                width="100%"
-                                image={item.thumbnailM}
-                                title="Contemplative Reptile"
-                                style={{ borderRadius: '5px' }}
-                            />
+                            <Link to={'/music-video/'+item.encodeId}>
+                                <CardMedia
+                                    component="img"
+                                    alt="Click to see MV"
+                                    height="100%"
+                                    width="100%"
+                                    image={item.thumbnailM}
+                                    title="Contemplative Reptile"
+                                    style={{ borderRadius: '5px' }}
+                                />
+                            </Link>
                             <span className='bg-[rgba(0,0,0,0.5)] px-1 rounded-md absolute bottom-0 right-[10px] text-white'>5:30</span>
                         </div>
                         <CardContent className='grid grid-cols-7  bg-[#170f23] text-white'>
@@ -130,7 +133,6 @@ const MV = () => {
                     </div>
                 ))}
             </div>
-            <h1>MV</h1>
         </div>
     )
 }

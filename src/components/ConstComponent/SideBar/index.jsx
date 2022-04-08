@@ -62,7 +62,7 @@ const SideBar = () => {
     ]
 
     useEffect(() => {
-        setActivePath(window.location.pathname);
+        setActivePath('/'+window.location.pathname.split('/')[1]);
 
     }, [window.location.pathname]);
 

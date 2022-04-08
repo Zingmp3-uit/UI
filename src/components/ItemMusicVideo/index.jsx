@@ -2,53 +2,18 @@ import Switch from '@material-ui/core/Switch';
 import logo from '../../assets/logo.png'
 import style from './ItemMusicVideo.module.css'
 import clsx from 'clsx';
-import React, { useState } from 'react';
-
+import React, { useState,useEffect } from 'react';
+import ZingAPI from "../../context/zing.context";
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.css';
 import CustomSwitch from '../CustomSwitch';
+import { Link } from 'react-router-dom';
 
+const api = new ZingAPI();
 
-const ItemMusicVideo = ({setIdVideo,idVideo}) => {
+const ItemMusicVideo = ({ props }) => {
+    const { recommendMV} = props
 
-    const [itemMusic, setItemMusic] = useState([
-        {
-            id_avatar_url: 'j5A461KptQ0',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: '7uRvS3tfyOE',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: '7MpCtnKYv9c',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: '0t8FomXzakE',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: 'D--95BHAA5I',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: '0t8FomXzakE',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-        {
-            id_avatar_url: 'Gw4nYIMJ3VM',
-            name: 'Hát lên nào',
-            singer: 'Nguyễn Trung Hiếu'
-        },
-    ])
-  
     return (
         <>
             <div className='flex justify-between'>
@@ -64,19 +29,18 @@ const ItemMusicVideo = ({setIdVideo,idVideo}) => {
                 </div>
             </div>
 
-            <SimpleBar style={{ height: '420px', color: '#ffff' }}>
-
-                <div className='grid grid-cols-5'>
-                    {itemMusic.map((item, index) => (
-                        <>
-                            <div className={clsx('col-span-2 p-1', style.item)} key={index} onClick={()=>setIdVideo(item.id_avatar_url)}>
-                                <img src={`https://img.youtube.com/vi/${item.id_avatar_url}/sddefault.jpg`} alt="" className='h-full w-full rounded-xl' />
+            <SimpleBar style={{ height: '440px', color: '#ffff' }}>
+                <div className=''>
+                    {recommendMV.map((item, index) => (
+                        <div className='flex  items-center	my-2 cursor-pointer' key={index}>
+                            <a href={'/music-video/' + item.encodeId} key={index} >
+                                <img src={item.thumbnailM} alt="" className=' w-[120px] rounded-xl mr-2' />
+                            </a>
+                            <div>
+                                <p>{item.title}</p>
+                                <p className='text-[13px] text-sky-900'>{item.artistsNames}</p>
                             </div>
-                            <div className={clsx('col-span-3 p-1 flex flex-col justify-center')}>
-                                <p>{item.name}</p>
-                                <p>{item.singer}</p>
-                            </div>
-                        </>
+                        </div>
                     ))}
                 </div>
             </SimpleBar>
