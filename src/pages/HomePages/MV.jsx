@@ -64,7 +64,7 @@ const MV = () => {
 
 
     return (
-        <div className="bg-[#170f23] px-10 pt-5">
+        <div className="px-10 pt-5 ">
             <div className="flex mb-1">
                 <p className="text-[30px] font-bold">MV </p>
                 <span className="text-[30px] mx-2">|</span>

@@ -30,11 +30,11 @@ const configComponent = (component) => {
     return (
         <div>
             <SideBar />
-            <div className="ml-[200px]">
+            <div className="ml-[200px] ">
                 <div>
                     <Header />
                 </div>
-                <div className="mt-[60px] mb-[80px]">
+                <div className="mt-[60px] mb-[80px] ">
                     {component}
                 </div>
             </div>
