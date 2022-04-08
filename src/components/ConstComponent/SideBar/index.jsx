@@ -31,7 +31,7 @@ const SideBar = () => {
         },
         {
             title: 'Khám phá',
-            path: '/discover',
+            path: '/',
             icon: <AlbumIcon className={classes.icon} />,
         },
         {
@@ -56,7 +56,7 @@ const SideBar = () => {
         },
         {
             title: 'MV',
-            path: '/music-video',
+            path: '/mv',
             icon: <MovieIcon className={classes.icon} />,
         },
     ]
