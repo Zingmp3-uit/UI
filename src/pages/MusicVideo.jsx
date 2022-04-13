@@ -24,7 +24,7 @@ const MusicVideo = () => {
     useEffect(async () => {
         await api.getVideo(window.location.pathname.split('/')[2]).then((data) => {
             let list = data.data.data
-            console.log(list);
+            console.log(list, list.streaming.mp4['720p']);
             setDataMV(list)
             setRecommendMV(list.recommends)
             setUrlVideo(list.streaming.mp4['720p'])
@@ -67,9 +67,13 @@ const MusicVideo = () => {
             <div className='px-4 '>
                 <div className='grid grid-cols-4 h-full'>
                     <div className='col-span-3 p-4 h-[500px]'>
-                        <video width="400" controls autoPlay className='h-full w-full border-[1px] border-slate-500'>
-                            <source src={urlVideo} type="video/mp4"/>
-                        </video>
+                        <iframe
+                            width="400" height="315"
+                            className='h-full w-full border-[1px] border-slate-500'
+                            src={urlVideo}
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe>
                     </div>
                     <div className='col-span-1 p-2  w-full h-[500px]'>
                         <ItemMusicVideo props={{ recommendMV }} />
