@@ -9,13 +9,15 @@ import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 const Category = () => {
     const api = new ZingAPI();
 
+    var loading = useState(true);
+
     const[itemsTopSuggest, setItemsTopSuggest] = useState([]);
 
     const getapi = async () => {
         api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = shuffle(res.data.data.topSuggest).slice(0, 4);
             setItemsTopSuggest(randomItemsTopSuggest);
-            console.log(randomItemsTopSuggest);
+            loading = false;
         })
     } 
 
@@ -46,6 +48,8 @@ const Category = () => {
 
                 <div className='pt-[1.5%] grid grid-cols-4 gap-[4%]'> 
                 {
+                    loading == true ? <h1>Loading</h1>
+                    :
                     itemsTopSuggest.map((item, index) => {
                         return (
                             <div className='w-[100.5%] h-full'>
@@ -69,9 +73,18 @@ const Category = () => {
                                 </div>
 
                                 <div className='pt-[2%] text-zinc-500 font-semibold text-[11pt]'>
-                                {
-                                    (item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name) + ", " + (item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name) + ", " + (item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name) + "..."
-                                }
+                                    <a className='hover:text-[#c662ef] hover:underline hover:cursor-pointer'>
+                                        {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name} 
+                                    </a>
+                                    <a>, </a>
+                                    <a className='hover:text-[#c662ef] hover:underline hover:cursor-pointer'>
+                                        {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                    </a>
+                                    <a>, </a>
+                                    <a className='hover:text-[#c662ef] hover:underline hover:cursor-pointer'>
+                                        {item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name}
+                                    </a>
+                                    <a>...</a>
                                 </div>
                             </div>
                         )
