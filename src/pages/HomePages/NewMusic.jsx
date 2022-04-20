@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png'
 import { useState, useEffect } from "react";
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import clsx from "clsx";
-
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 
 const api = new ZingAPI();
 
@@ -37,7 +37,7 @@ const NewMusic = () => {
                                     { "text-rose-600": i === 2 }
                                 )}
                             >{i + 1}</p>
-                            <p className="font-bold text-[50px] mr-2">-</p>
+                            <UnfoldMoreIcon/>
                             <div className="flex items-center">
                                 <img src={item.thumbnailM} alt="" className="h-[50px] w-[50px] mx-2" />
                                 <div>

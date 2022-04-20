@@ -13,11 +13,11 @@ const Header = () => {
 
 
     return (
-        <div className='fixed top-0 right-0 left-[200px] shadow-xl h-[60px]  bg-[#1A374D] text-white flex items-center justify-between px-4 z-10'>
+        <div className='fixed top-0 right-0 left-[200px] shadow-xl h-[60px]  bg-[#406882] text-white flex items-center justify-between px-4 z-10'>
             <div className='flex items-center w-[70%]'>
                 <ArrowBackIcon className='rounded-full hover:bg-[#170f23] p-1 mx-1' style={{ fontSize: '40px' }} />
                 <ArrowForwardIcon className='rounded-full hover:bg-[#170f23] p-1 mx-1' style={{ fontSize: '40px' }} />
-                <span className='bg-[#406882]  rounded-3xl px-2 flex items-center w-full'>
+                <span className='bg-[#1A374D]  rounded-3xl px-2 flex items-center w-full'>
                     <SearchIcon />
                     <input type="text" className='bg-transparent w-full m-2' style={{ outline: 'none' }} placeholder='Nhập tên bài hát, nghệ sĩ, hoặc MV ...' />
                 </span>
