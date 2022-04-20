@@ -33,7 +33,7 @@ const MusicVideo = () => {
 
 
     return (
-        <div style={{ backgroundColor: '#170f23' }}>
+        <div>
             <div className='flex justify-between w-full p-5 px-10 '>
                 <div className='flex items-center'>
                     <img src={dataMV.artist?.thumbnail} alt="" className='rounded-full h-[60px] w-[60px] ' />
@@ -41,9 +41,9 @@ const MusicVideo = () => {
                         <p className="text-[20px] font-semibold">{dataMV.title}</p>
                         <p className='text-[13px]'>
                             {dataMV.artists ? dataMV.artists.map((artist, i) => (
-                                <span key={i} className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                <span key={i} className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]'>
                                     <Link to='' >{artist.name}</Link>
-                                    {i !== dataMV.artists.length - 1 ? <span className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
+                                    {i !== dataMV.artists.length - 1 ? <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
                                 </span>
                             )) : null}
                         </p>

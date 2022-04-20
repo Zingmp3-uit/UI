@@ -94,7 +94,7 @@ const MV = () => {
             </span>
             <div className="grid grid-cols-3 mt-5 mx-8 ">
                 {mv.map((item, index) => (
-                    <div className='w-full m-2  bg-[#170f23] px-5' key={index}>
+                    <div className='w-full m-2  px-5' key={index}>
                         <div className=' relative'>
                             <Link to={'/music-video/'+item.encodeId}>
                                 <CardMedia
@@ -109,7 +109,7 @@ const MV = () => {
                             </Link>
                             <span className='bg-[rgba(0,0,0,0.5)] px-1 rounded-md absolute bottom-0 right-[10px] text-white'>5:30</span>
                         </div>
-                        <CardContent className='grid grid-cols-7  bg-[#170f23] text-white'>
+                        <CardContent className='grid grid-cols-7   text-white'>
                             <CardMedia
                                 component="img"
                                 style={{ borderRadius: '50%', width: '40px', height: '40px' }}
@@ -120,11 +120,11 @@ const MV = () => {
                                 <p style={{ fontSize: '17px', margin: '0' }} className='cursor-pointer hover:text-[rgb(204,116,191)]'>
                                     {item.title}
                                 </p>
-                                <p style={{ fontSize: '15px' }} className='text-sky-900		 cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                <p style={{ fontSize: '15px' }} className='text-[#B1D0E0]		 cursor-pointer hover:text-[rgb(204,116,191)]'>
                                     {item.artists.map((artist, i) => (
-                                        <span className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                        <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]'>
                                             <Link to='' >{artist.name}</Link>
-                                            {i !== item.artists.length - 1 ? <span className='text-sky-900 cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
+                                            {i !== item.artists.length - 1 ? <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
                                         </span>
                                     ))}
                                 </p>
