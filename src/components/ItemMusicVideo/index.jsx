@@ -1,8 +1,7 @@
 import Switch from '@material-ui/core/Switch';
 import logo from '../../assets/logo.png'
-import style from './ItemMusicVideo.module.css'
 import clsx from 'clsx';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ZingAPI from "../../context/zing.context";
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.css';
@@ -12,7 +11,7 @@ import { Link } from 'react-router-dom';
 const api = new ZingAPI();
 
 const ItemMusicVideo = ({ props }) => {
-    const { recommendMV} = props
+    const { recommendMV } = props
 
     return (
         <>
@@ -30,17 +29,19 @@ const ItemMusicVideo = ({ props }) => {
             </div>
 
             <SimpleBar style={{ height: '440px', color: '#ffff' }}>
-                <div className=''>
+                <div className='grid grid-cols-3'>
                     {recommendMV.map((item, index) => (
-                        <div className='flex  items-center	my-2 cursor-pointer' key={index}>
-                            <a href={'/music-video/' + item.encodeId} key={index} >
-                                <img src={item.thumbnailM} alt="" className=' w-[120px] rounded-xl mr-2' />
-                            </a>
-                            <div>
-                                <p>{item.title}</p>
-                                <p className='text-[13px] text-sky-900'>{item.artistsNames}</p>
+                        <>
+                            <div className=' my-1 cursor-pointer col-span-1 mr-2' key={index}>
+                                <a href={'/music-video/' + item.encodeId} key={index}  >
+                                    <img src={item.thumbnailM} alt="" className=' w-full rounded-md mr-2' />
+                                </a>
                             </div>
-                        </div>
+                            <div className='col-span-2 '>
+                                <p>{item.title}</p>
+                                <p className='text-[13px] text-[#B1D0E0]'>{item.artistsNames}</p>
+                            </div>
+                        </>
                     ))}
                 </div>
             </SimpleBar>

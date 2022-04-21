@@ -21,7 +21,7 @@ const ItemVideo = ({ props }) => {
             <div className='grid grid-cols-4 px-9'>
                 {
                     recommendMV.map((item, index) => (
-                        <div className='w-full m-2  bg-[#170f23] px-5' key={index}>
+                        <div className='w-full m-2   px-5' key={index}>
                             <div className=' relative'>
                                 <a href={'/music-video/' + item.encodeId}>
                                     <CardMedia
@@ -36,7 +36,7 @@ const ItemVideo = ({ props }) => {
                                 </a>
                                 <span className='bg-[rgba(0,0,0,0.5)] px-1 rounded-md absolute bottom-0 right-[10px] text-white'>5:30</span>
                             </div>
-                            <CardContent className='grid grid-cols-7  bg-[#170f23] text-white'>
+                            <CardContent className='grid grid-cols-7  text-white'>
                                 <CardMedia
                                     component="img"
                                     style={{ borderRadius: '50%', width: '40px', height: '40px' }}
