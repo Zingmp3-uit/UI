@@ -1,6 +1,7 @@
 *{
     color: white;
     /* background-color: #170f23; */
+    font-family: 'Nunito Sans', sans-serif;
 }
 .rotate {
     animation: rotation 8s infinite linear;

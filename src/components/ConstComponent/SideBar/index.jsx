@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import logo from '../../../assets/logo.png'
+import logo from '../../../assets/Muzzi_Logo_Full.svg'
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 //mui
@@ -62,17 +62,17 @@ const SideBar = () => {
     ]
 
     useEffect(() => {
-        setActivePath(window.location.pathname);
+        setActivePath('/'+window.location.pathname.split('/')[1]);
 
     }, [window.location.pathname]);
 
     return (
-        <div className="fixed top-0 bottom-0 left-0 w-[200px] shadow-xl bg-[#2a213a] text-white ">
-            <img src={'https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg'} alt="" className='w-full text-center px-7 py-3' />
+        <div className="fixed top-0 bottom-0 left-0 w-[200px] shadow-xl bg-[#1A374D] text-white ">
+            <img src={'https://svgshare.com/i/gSG.svg?fbclid=IwAR0XkB3pYh0JSAF95X9jlWHCa1EaG26WPjG8T0eQnKcRF_8jW1nJS73Bm0E'} alt="" className='w-full text-center px-7 py-3' />
             <div>
                 {titlePath.map((item, index) => (
                     <div key={index} >
-                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#40384e] cursor-pointer',{'bg-[#40384e]': activePath === item.path })}>
+                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#1A374D] cursor-pointer',{'bg-[#406882]': activePath === item.path })}>
                             {item.icon}
                             <p className='text-[18px] font-semibold'>{item.title}</p>
                         </Link>

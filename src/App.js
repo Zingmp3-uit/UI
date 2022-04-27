@@ -5,7 +5,8 @@ import {
     Link
 } from "react-router-dom";
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect,createContext  } from 'react';
+import ZingAPI from "./context/zing.context";
 //pages
 import Singer from '../src/pages/Singer'
 import Album from '../src/pages/Album'
@@ -25,10 +26,11 @@ import SideBar from '../src/components/ConstComponent/SideBar'
 import PlayMusic from '../src/components/ConstComponent/PlayMusic'
 import OverLayer  from "./components/Overlayer";
 
-
+export const MusicContext = createContext()
 const configComponent = (component) => {
-
+    // const [videoId, setVideoId] = useState('')
     return (
+        // <MusicContext.Provider value={videoId}>
         <div>
             <SideBar />
             <div className="ml-[200px] ">
@@ -42,6 +44,7 @@ const configComponent = (component) => {
             </div>
             <PlayMusic />
         </div>
+        // </MusicContext.Provider>
     )
 }
 let path = [
@@ -93,6 +96,7 @@ function App() {
     return (
         <Routes>
             <Route path="/music-video" element={<MusicVideo />} />
+            <Route path="/music-video/:id" element={<MusicVideo />} />
             {path.map((item, index) => {
                 return (
                     <Route path={item.path} element={item.component} key={index} />
