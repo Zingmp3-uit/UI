@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 //API
 import ZingAPI from "../../context/zing.context";
 //MUI
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 //Components
 import AlbumLoader from "../../components/SkeletonLoader/AlbumLoader";
 import SongLoader from "../../components/SkeletonLoader/SongLoader";
+import ItemAlbum from '../../components/ItemAlbum/ItemAlbum';
 
 const Category = () => {
     const api = new ZingAPI();
@@ -20,12 +19,12 @@ const Category = () => {
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = shuffle(res.data.data.topSuggest).slice(0, 4);
             setItemsTopSuggest(randomItemsTopSuggest);
-            console.log(res);
+            //console.log(res);
         });
 
         await api.getChartHome().then(res => {
             setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
-            console.log(res);
+            //console.log(res);
         });
     } 
 
@@ -53,7 +52,7 @@ const Category = () => {
         getapi();
     }, []);
 
-    return (
+    return (  
         <div className='relative w-full h-screen'>
             <div className="w-full h-1/2 bg-cover bg-no-repeat bg-cover_nhac_viet">
             </div>
@@ -103,47 +102,11 @@ const Category = () => {
                     </div>
                     :
                     <div>
-                        <div className='pt-[1.5%] grid grid-cols-4 gap-[4%]'>
-                        {
-                            itemsTopSuggest.map((item, index) => {
-                                return (
-                                    <div className='w-full h-full'>
-                                        <div className='relative group rounded-[3%] overflow-hidden'>
-                                            <img className='group-hover:scale-110 group-hover:brightness-50 duration-500 object-cover rounded-[3%]' src={item.thumbnailM}>
-                                            </img>
-
-                                            <div className="absolute p-[8px] w-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
-                                                <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                                                <div className="w-12 h-12 flex items-center justify-center border rounded-full">
-                                                    <PlayArrowIcon></PlayArrowIcon>
-                                                </div>
-                                                <MoreHorizOutlinedIcon></MoreHorizOutlinedIcon>                                       
-                                            </div>                             
-                                        </div>
-
-                                        <div className='pt-[2%] font-bold text-[12pt] hover:text-[#B1D0E0] hover:cursor-pointer'>
-                                            {item.title}
-                                        </div>
-
-                                        <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
-                                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
-                                                {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name} 
-                                            </a>
-                                            <a>, </a>
-                                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
-                                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
-                                            </a>
-                                            <a>, </a>
-                                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
-                                                {item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name}
-                                            </a>
-                                            <a>...</a>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }     
-                        </div>
+                        <ItemAlbum 
+                        albumsList={itemsTopSuggest}
+                        isSubtitleClickable={true}
+                        >
+                        </ItemAlbum>
 
                         <div className='pt-[5%]'>
                             <h1 className='text-white text-[16pt] font-bold'>        
