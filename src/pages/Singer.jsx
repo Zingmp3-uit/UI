@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 //API
 import ZingAPI from "../context/zing.context";
+//MUI
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PeopleIcon from '@material-ui/icons/People';
 //Components
 import ItemAlbum from '../components/ItemAlbum/ItemAlbum';
 
@@ -48,25 +51,36 @@ const Singer = () => {
         getapi();
     }, []);
 
+    function abbreviateNumber(value) {
+        var newValue = value;
+        if (value >= 1000) {
+            var suffixes = ["", "K", "M", "B","T"];
+            var suffixNum = Math.floor( (""+value).length/3 );
+            var shortValue = '';
+            for (var precision = 2; precision >= 1; precision--) {
+                shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
+                var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
+                if (dotLessShortValue.length <= 2) { break; }
+            }
+            if (shortValue % 1 != 0)  shortValue = shortValue.toFixed(1);
+            newValue = shortValue+suffixes[suffixNum];
+        }
+        return newValue;
+    }
+
     function displaySections() {
         return(
             <div>
                 <div>
-                {
-                    songs.map((item, index) => {
-                        return(
-                            <div>
-                                "Song"
-                                {item.title}
-                            </div>
-                        )
-                    })
-                }
                 </div>
 
-                <h1 className='text-white text-[16pt] font-bold'>        
-                    Single & EP
-                </h1>                
+                {
+                    singles_EPs.length == 0 ? ""
+                    :
+                    <h1 className='text-white text-[16pt] font-bold'>        
+                        Single & EP
+                    </h1> 
+                }               
 
                 <ItemAlbum 
                 albumsList={singles_EPs}
@@ -74,9 +88,13 @@ const Singer = () => {
                 >
                 </ItemAlbum>
 
-                <h1 className='text-white text-[16pt] font-bold'>        
-                    Album
-                </h1>                
+                {
+                    albums.length == 0 ? ""
+                    :
+                    <h1 className='text-white text-[16pt] font-bold'>        
+                        Album
+                    </h1> 
+                }              
 
                 <ItemAlbum 
                 albumsList={albums}
@@ -102,8 +120,52 @@ const Singer = () => {
     }
 
     return (
-        <div>
-            <h1>Singer</h1>
+        <div className='relative w-full h-screen'>
+            <div className='w-full h-1/2 bg-[#406882]'>
+                <div className='w-[90%] h-1/6 mx-auto'>
+                </div>
+
+                <div className='relative w-[90%] h-[75%] mx-auto'>
+                    <div className='absolute w-[65%] h-full'>
+                        <div className='text-4xl font-black truncate ...'>
+                            {info.name}
+                        </div>
+                        
+                        <div className='h-[10px]'></div>
+
+                        <div className='text-base font-semibold line-clamp-2'>
+                            {info.sortBiography}
+                        </div>
+
+                        <div className='h-[5px]'></div>
+
+                        <div className='relative w-[70%] h-1/4 '>
+                            <div className='absolute top-[15%] w-[47.5%] h-[70%] bg-[#6998AB] rounded-full'>
+                                <div className='flex w-full h-full justify-center items-center text-sm font-semibold truncate ...'>
+                                    <PlayArrowIcon></PlayArrowIcon>
+
+                                    <div className='w-[5px]'></div>
+
+                                    PHÁT NHẠC
+                                </div>
+                            </div>
+
+                            <div className='absolute right-[0%] top-[15%] w-[47.5%] h-[70%]'>
+                                <div className='flex w-full h-full justify-center items-center text-sm font-semibold truncate ...'>
+                                    <PeopleIcon></PeopleIcon>
+
+                                    <div className='w-[5px]'></div>
+
+                                    {abbreviateNumber(info.follow)} NGƯỜI QUAN TÂM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <img className='absolute right-[0%] h-full object-cover rounded-full' src={info.thumbnailM}>
+                    </img>                        
+                </div>             
+            </div>
 
             <div>
             {
