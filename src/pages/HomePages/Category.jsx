@@ -131,7 +131,7 @@ const Category = () => {
                                                 </div>
 
                                                 <div className='text-[10pt] font-semibold text-slate-400 truncate ...'>
-                                                    <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer'>
+                                                    <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[0].alias}>
                                                     {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name}
                                                     </a>
                                                     {
@@ -139,9 +139,20 @@ const Category = () => {
                                                         :
                                                         <>
                                                         <a>, </a>
-                                                        <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer'>
-                                                        {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
-                                                        </a>
+                                                        {
+                                                            item.artists.length == 2 ? 
+                                                            <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                            {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                            </a>
+                                                            :
+                                                            <>
+                                                                <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                                </a>
+
+                                                                <a>,...</a>
+                                                            </>
+                                                        }
                                                         </>
                                                     }
                                                 </div>

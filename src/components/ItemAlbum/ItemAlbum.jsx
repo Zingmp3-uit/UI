@@ -34,15 +34,15 @@ function ItemAlbum(props) {
                     {
                         isSubtitleClickable == true ?
                         <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[0].alias}>
                                 {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name} 
                             </a>
                             <a>, </a>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[1].alias}>
                                 {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
                             </a>
                             <a>, </a>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer'>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[2].alias}>
                                 {item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name}
                             </a>
                             <a>...</a>

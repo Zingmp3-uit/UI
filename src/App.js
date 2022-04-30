@@ -47,7 +47,7 @@ const configComponent = (component) => {
 }
 let path = [
     {
-        path: '/singer',
+        path: '/:alias',
         component: configComponent(<Singer />)
     },
     {
