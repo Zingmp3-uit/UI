@@ -121,7 +121,9 @@ const Singer = () => {
 
     return (
         <div className='relative w-full h-screen'>
-            <div className='w-full h-1/2 bg-[#406882]'>
+            <div className='relative w-full h-1/2 bg-[#406882]'>
+                <img className='absolute w-full h-full object-cover mix-blend-multiply blur-xl' src={info.thumbnailM}></img>
+
                 <div className='w-[90%] h-[8%] mx-auto'>
                 </div>
 
