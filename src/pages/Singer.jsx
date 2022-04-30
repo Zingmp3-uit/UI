@@ -122,10 +122,10 @@ const Singer = () => {
     return (
         <div className='relative w-full h-screen'>
             <div className='w-full h-1/2 bg-[#406882]'>
-                <div className='w-[90%] h-1/6 mx-auto'>
+                <div className='w-[90%] h-[8%] mx-auto'>
                 </div>
 
-                <div className='relative w-[90%] h-[75%] mx-auto'>
+                <div className='relative w-[90%] h-[83%] mx-auto'>
                     <div className='absolute w-[65%] h-full'>
                         <div className='text-4xl font-black truncate ...'>
                             {info.name}
@@ -138,8 +138,8 @@ const Singer = () => {
                         </div>
 
                         <div className='h-[5px]'></div>
-
-                        <div className='relative w-[70%] h-1/4 '>
+                        
+                        <div className='relative w-[70%] h-1/4 overflow-hidden'>
                             <div className='absolute top-[15%] w-[47.5%] h-[70%] bg-[#6998AB] rounded-full'>
                                 <div className='flex w-full h-full justify-center items-center text-sm font-semibold truncate ...'>
                                     <PlayArrowIcon></PlayArrowIcon>
@@ -159,11 +159,34 @@ const Singer = () => {
                                     {abbreviateNumber(info.follow)} NGƯỜI QUAN TÂM
                                 </div>
                             </div>
-                        </div>
+                        </div>                     
                     </div>
 
-                    <img className='absolute right-[0%] h-full object-cover rounded-full' src={info.thumbnailM}>
-                    </img>                        
+                    <img className='absolute right-0 h-full object-cover rounded-full' src={info.thumbnailM}>
+                    </img>
+
+                    {
+                        singles_EPs.length == 0 ? ""
+                        :
+                        <div className='absolute bottom-0 h-[28%] w-[60%] overflow-hidden'>
+                            <img className='absolute h-full object-cover rounded-[5px]' src={singles_EPs[0].thumbnailM}>
+                            </img>
+
+                            <div className='absolute right-0 h-full w-[85%]'>
+                                <div className='absolute w-full text-[8pt] font-bold truncate ...'>
+                                    MỚI NHẤT
+                                </div>
+
+                                <div className='absolute w-full top-[32%] text-[12pt] font-bold truncate ...'>
+                                    {singles_EPs[0].title}
+                                </div>
+
+                                <div className='absolute w-full bottom-0 text-[8pt] font-bold text-slate-300 truncate ...'>
+                                    {singles_EPs[0].releaseDate}
+                                </div>                                                                
+                            </div>
+                        </div>
+                    }                       
                 </div>             
             </div>
 
