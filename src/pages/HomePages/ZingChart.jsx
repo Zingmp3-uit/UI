@@ -3,6 +3,8 @@ import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Sector, Cell } from 'recharts';
+
 
 
 const ZingChart = () => {
@@ -98,7 +100,83 @@ const ZingChart = () => {
             rate: 10
         }
     ])
-    
+    const [datas, setDatas] = useState(
+        [
+            {
+                time: '20:00',
+                top1: 4000,
+                top2: 2400,
+                top3: 2400,
+            },
+            {
+                time: '22:00',
+                top1: 3000,
+                top2: 1398,
+                top3: 2210,
+            },
+            {
+                time: '00:00',
+                top1: 2000,
+                top2: 9800,
+                top3: 4290,
+            },
+            {
+                time: '02:00',
+                top1: 2780,
+                top2: 3908,
+                top3: 2000,
+            },
+            {
+                time: '04:00',
+                top1: 1890,
+                top2: 4800,
+                top3: 2181,
+            },
+            {
+                time: '06:00',
+                top1: 2390,
+                top2: 3800,
+                top3: 2500,
+            },
+            {
+                time: '08:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+            {
+                time: '10:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+            {
+                time: '12:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+            {
+                time: '14:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+            {
+                time: '16:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+            {
+                time: '18:00',
+                top1: 3490,
+                top2: 4300,
+                top3: 2100,
+            },
+        ]
+    )
+
     return (
         <React.Fragment>
             <div className="w-full h-full bg-[#170f23]">
@@ -111,6 +189,20 @@ const ZingChart = () => {
                                 <PlayArrowRoundedIcon />
                             </div>
                         </div>
+                        <div className="mt-[32px]">
+                            <LineChart
+                                width={1156}
+                                height={400}
+                                data={datas}
+                            >
+                                <XAxis dataKey="time" />
+                                {/* <Tooltip /> */}
+                                <CartesianGrid stroke="#737373" strokeOpacity={0.2} strokeDasharray={"3 3"}/>
+                                <Line type="monotone" dataKey="top1" stroke="rgb(74, 144, 226)" yAxisId={0} />
+                                <Line type="monotone" dataKey="top2" stroke="rgb(39, 189, 156)" yAxisId={1} />
+                                <Line type="monotone" dataKey="top3" stroke="rgb(227, 80, 80)" yAxisId={2} />
+                            </LineChart>
+                        </div>
                     </div>
                 </div>
                 <div className="py-[24px] px-[60px]">
@@ -118,9 +210,20 @@ const ZingChart = () => {
                         {
                             itemSongs.map((item, index) => {
                                 return (
-                                    <div className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
+                                    <div className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5" key={index}>
                                         <div className="flex flex-row items-center justify-around">
-                                            <span className="font-sans text-3xl font-bold">{item.rate}</span>
+                                            {(index === 0) &&
+                                            <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #4a90e2', 'color': 'rgba(0,0,0,0)'}}>{item.rate}</span>
+                                            }
+                                            {(index === 1) &&
+                                            <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #50e3c2', 'color': 'rgba(0,0,0,0)'}}>{item.rate}</span>
+                                            }
+                                            {(index === 2) &&
+                                            <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #e35050', 'color': 'rgba(0,0,0,0)'}}>{item.rate}</span>
+                                            }
+                                            {(index !== 0) && (index !== 1) && (index !== 2) &&
+                                            <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7'}}>{item.rate}</span>
+                                            }
                                             <div>
                                                 <RemoveRoundedIcon />
                                             </div>
@@ -166,34 +269,34 @@ const ZingChart = () => {
                                 </div>
                                 <div>
                                     <div>
-                                    {
-                                    itemSongs.map((item, index) => {
-                                        if(index < 4){
-                                            return (
-                                                <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center">
-                                                    <div className="flex flex-row items-center justify-around">
-                                                        <span className="font-sans text-3xl font-bold">{item.rate}</span>
-                                                        <div>
-                                                            <RemoveRoundedIcon />
+                                        {
+                                            itemSongs.map((item, index) => {
+                                                if (index < 4) {
+                                                    return (
+                                                        <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center">
+                                                            <div className="flex flex-row items-center justify-around">
+                                                                <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7'}}>{item.rate}</span>
+                                                                <div>
+                                                                    <RemoveRoundedIcon />
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row">
+                                                                <div className="w-10 h-10 rounded overflow-hidden mr-2">
+                                                                    <img src={item.image_url} alt="" />
+                                                                </div>
+                                                                <div>
+                                                                    <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row justify-between">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="flex flex-row">
-                                                        <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                                                            <img src={item.image_url} alt="" />
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                                            <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-row justify-between">
-                                                        <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
-                                                    </div>
-                                                </div>
-                                                )
+                                                    )
+                                                }
+                                            })
                                         }
-                                        })
-                                    }
                                     </div>
                                     <div className="my-6 text-center">
                                         <button className="px-6 py-2 border rounded-3xl">Xem tất cả</button>
@@ -210,34 +313,34 @@ const ZingChart = () => {
                                 </div>
                                 <div>
                                     <div>
-                                    {
-                                    itemSongs.map((item, index) => {
-                                        if(index < 4){
-                                            return (
-                                                <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
-                                                    <div className="flex flex-row items-center justify-around">
-                                                        <span className="font-sans text-3xl font-bold">{item.rate}</span>
-                                                        <div>
-                                                            <RemoveRoundedIcon />
+                                        {
+                                            itemSongs.map((item, index) => {
+                                                if (index < 4) {
+                                                    return (
+                                                        <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
+                                                            <div className="flex flex-row items-center justify-around">
+                                                                <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7'}}>{item.rate}</span>
+                                                                <div>
+                                                                    <RemoveRoundedIcon />
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row">
+                                                                <div className="w-10 h-10 rounded overflow-hidden mr-2">
+                                                                    <img src={item.image_url} alt="" />
+                                                                </div>
+                                                                <div>
+                                                                    <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row justify-between">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="flex flex-row">
-                                                        <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                                                            <img src={item.image_url} alt="" />
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                                            <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-row justify-between">
-                                                        <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
-                                                    </div>
-                                                </div>
-                                                )
+                                                    )
+                                                }
+                                            })
                                         }
-                                        })
-                                    }
                                     </div>
                                     <div className="my-6 text-center">
                                         <button className="px-6 py-2 border rounded-3xl">Xem tất cả</button>
@@ -254,34 +357,34 @@ const ZingChart = () => {
                                 </div>
                                 <div>
                                     <div>
-                                    {
-                                    itemSongs.map((item, index) => {
-                                        if(index < 4){
-                                            return (
-                                                <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
-                                                    <div className="flex flex-row items-center justify-around">
-                                                        <span className="font-sans text-3xl font-bold">{item.rate}</span>
-                                                        <div>
-                                                            <RemoveRoundedIcon />
+                                        {
+                                            itemSongs.map((item, index) => {
+                                                if (index < 4) {
+                                                    return (
+                                                        <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
+                                                            <div className="flex flex-row items-center justify-around">
+                                                                <span className="font-sans text-3xl font-bold" style={{'-webkit-text-stroke':'1px #ffffff', 'color': 'rgba(0,0,0,0)' , 'opacity': '0.7'}}>{item.rate}</span>
+                                                                <div>
+                                                                    <RemoveRoundedIcon />
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row">
+                                                                <div className="w-10 h-10 rounded overflow-hidden mr-2">
+                                                                    <img src={item.image_url} alt="" />
+                                                                </div>
+                                                                <div>
+                                                                    <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-row justify-between">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="flex flex-row">
-                                                        <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                                                            <img src={item.image_url} alt="" />
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                                            <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-row justify-between">
-                                                        <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
-                                                    </div>
-                                                </div>
-                                                )
+                                                    )
+                                                }
+                                            })
                                         }
-                                        })
-                                    }
                                     </div>
                                     <div className="my-6 text-center">
                                         <button className="px-6 py-2 border rounded-3xl">Xem tất cả</button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+    import React, { useState } from 'react'
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ShuffleRoundedIcon from '@material-ui/icons/ShuffleRounded';
@@ -215,7 +215,7 @@ const Discover = () => {
                         {
                             itemPlaylists.map((item, index) => {
                                 return (
-                                    <div className="flex flex-col justify-center p-[16px] cursor-pointer">
+                                    <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
                                         <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                             <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumd} alt="" />
                                             <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
