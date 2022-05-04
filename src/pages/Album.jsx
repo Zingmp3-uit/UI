@@ -9,13 +9,23 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 //import AlbumLoader from "../components/SkeletonLoader/AlbumLoader";
 import ItemAlbum from '../components/ItemAlbum/ItemAlbum';
+
 const Album = () => {
     const api = new ZingAPI();
+    const[itemsTopAlbum, setItemsTopAlbum] = useState([]);
     const[itemsTopSuggest, setItemsTopSuggest] = useState([]);
     const[itemsHotSongs, setItemsHotSongs] = useState([]);
+    const[itemsArtist, setItemsArtist] = useState([]);
     const getapi = async () => {
+        await api.search("Nhạc Việt").then(res => {
+            const randomItemsTopAlbum = (res.data.data.topSuggest).slice(0, 1);
+            setItemsTopAlbum(randomItemsTopAlbum);
+            console.log(itemsTopAlbum);
+        });
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = (res.data.data.topSuggest).slice(0, 4);
             setItemsTopSuggest(randomItemsTopSuggest);
@@ -25,6 +35,11 @@ const Album = () => {
         await api.getChartHome().then(res => {
             setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
             //console.log(res);
+        });
+        await api.getDetailPlaylist("ZFFICOO7").then(res => {
+            const itemartist = (res.data.data.artists).slice(0,4)
+            setItemsArtist(itemartist);
+            //console.log(itemsArtist);
         });
     } 
     useEffect(async () => {
@@ -38,28 +53,28 @@ const Album = () => {
         sec < 10 ? res = res + ":" + 0 + sec.toString() : res = res + ":" + sec.toString();
         return res;
     }
-    const [itemArtists, setItemArtists] = useState([
-        {
-            id: 1,
-            name: 'NCT',
-            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/9/e/e/e/9eee7e94d4e1530370067c2d7bac929f.jpg'
-        },
-        {
-            id: 2,
-            name: 'NCT 127',
-            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/0/9/4/5/094502d5cae906eb9be005979edff647.jpg'
-        },
-        {
-            id: 3,
-            name: 'NCT U',
-            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/7/7/773932d903569e1dc72b2c850e3a8b21_1461308953.jpg'
-        },
-        {
-            id: 4,
-            name: 'EXO',
-            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/a/8/5/d/a85df1e32e6d116a794edb107c26c117.jpg'
-        }
-    ])
+    // const [itemArtists, setItemArtists] = useState([
+    //     {
+    //         id: 1,
+    //         name: 'NCT',
+    //         image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/9/e/e/e/9eee7e94d4e1530370067c2d7bac929f.jpg'
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'NCT 127',
+    //         image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/0/9/4/5/094502d5cae906eb9be005979edff647.jpg'
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'NCT U',
+    //         image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/7/7/773932d903569e1dc72b2c850e3a8b21_1461308953.jpg'
+    //     },
+    //     {
+    //         id: 4,
+    //         name: 'EXO',
+    //         image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/a/8/5/d/a85df1e32e6d116a794edb107c26c117.jpg'
+    //     }
+    // ])
     const [itemSongs, setItemSongs] = useState([
         {
             id: 1,
@@ -187,9 +202,56 @@ const Album = () => {
     ])
     return (
         <div>
-            <div className="grid grid-cols-5 px-[40px]">
-                <div className="col-span-1"></div>
-                <div className="col-span-4">
+            <div className="grid grid-cols-8 px-[40px]">
+                <div className="col-span-2">
+                {
+        itemsTopAlbum.map((item, index) => {
+            return (
+                <div className='w-full h-full'>
+                    <div className='relative group rounded-[3%] overflow-hidden'>
+                        <img className='group-hover:scale-110 group-hover:brightness-50 duration-500 object-cover rounded-[3%]' src={item.thumbnailM}>
+                        </img>
+
+                        <div className="absolute  w-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
+                            
+                            <div className="w-12 h-12 flex items-center justify-center border rounded-full">
+                                <PlayArrowIcon></PlayArrowIcon>
+                            </div>
+                                                                  
+                        </div>                             
+                    </div>
+
+                    <div className='pt-[2%] text-center  font-bold text-[12pt] truncate ... hover:text-[#B1D0E0] hover:cursor-pointer'>
+                        {item.title}
+                    </div>
+
+                    
+                        
+                        <div className='pt-[2%] text-center text-slate-400 font-semibold text-[11pt]'>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[0].alias}>
+                                {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name} 
+                            </a>
+                            <a>, </a>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[1].alias}>
+                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                            </a>
+                            <a>, </a>
+                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[2].alias}>
+                                {item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name}
+                            </a>
+                            <a>...</a>
+                        </div>
+                        
+                        <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
+                            {item.releaseDateText}
+                        </div>
+                    
+                </div>
+            )
+        })
+    }     
+                </div>
+                <div className="col-span-6">
                     <div className="py-[24px] px-[60px]">
                         <div className='relative group h-[60px] flex w-full rounded-[5px]'>
                             <div className="h-full  mt-[10.5px] ml-[10.5px] mb-[10.5px]">
@@ -207,34 +269,7 @@ const Album = () => {
                         </div>
                         <div>
                         {
-                            // itemSongs.map((item, index) => {
-                            //     return (
-                            //         <div className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
-                            //             <div className="flex flex-row items-center justify-around">
-                                            
-                                            
-                            //             </div>
-                            //             <div className="flex flex-row">
-                            //                 <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                            //                     <img src={item.image_url} alt="" />
-                            //                 </div>
-                            //                 <div>
-                            //                     <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                            //                     <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
-                            //                 </div>
-                            //             </div>
-                            //             <div>
-                            //                 <span className="text-[14px] text-[#737373] font-medium">{item.album}</span>
-                            //             </div>
-                            //             <div className="flex flex-row justify-between">
-                            //                 <div>
-                            //                     <FavoriteRoundedIcon />
-                            //                 </div>
-                            //                 <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
-                            //             </div>
-                            //         </div>
-                            //     )
-                            // })
+                        
                             itemsHotSongs.map((item, index) => {
                                 return(
                                     <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]'>
@@ -301,14 +336,14 @@ const Album = () => {
                         <h2 className="text-[30px] font-bold leading-9 mr-[16px]">Nghệ sĩ tham gia</h2>
                         
                     </div>
-                    {/* <div className="flex flex-row my-6 pt-[1.5%]">
+                    {/* <div className="flex flex-row ">
                         <ItemAlbum 
-                        albumsList={itemsTopSuggest}
+                        albumsList={itemsArtist}
                         isSubtitleClickable={true}
                         >
                         </ItemAlbum>
                     </div> */}
-                    <div className="flex flex-row my-6">
+                    {/* <div className="flex flex-row my-6">
                         {
                             itemArtists.map((item, index) => {
                                 return (
@@ -333,7 +368,7 @@ const Album = () => {
                             })
                         }  
                         
-                    </div>
+                    </div> */}
                 </div>
                 <div className="pt-[70px] pl-[60px] pr-[60px]">
                     <div className="flex flex-row justify-between">
