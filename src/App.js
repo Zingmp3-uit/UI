@@ -5,7 +5,7 @@ import {
     Link
 } from "react-router-dom";
 import './App.css';
-import React, { useState, useEffect,createContext  } from 'react';
+import React, { useState, useEffect, createContext, useRef } from 'react';
 import ZingAPI from "./context/zing.context";
 //pages
 import Singer from '../src/pages/Singer'
@@ -26,69 +26,81 @@ import SideBar from '../src/components/ConstComponent/SideBar'
 import PlayMusic from '../src/components/ConstComponent/PlayMusic'
 
 export const MusicContext = createContext()
-const configComponent = (component) => {
-    // const [videoId, setVideoId] = useState('')
+const ConfigComponent = ({ children }) => {
+    const [videoId, setVideoId] = useState('')
+    const audioRef = useRef(null)
+    const playAudio = () => {
+        audioRef.current.play()
+    }
+    const pauseAudio = () => {
+        audioRef.current.pause()
+    }
+    const createInfoAudio = (id) => {
+        audioRef.current.setInfoAudio(id)
+        playAudio()
+    }
     return (
-        // <MusicContext.Provider value={videoId}>
-        <div>
+        <MusicContext.Provider value={{ videoId, setVideoId, playAudio, pauseAudio,createInfoAudio }}>
             <SideBar />
             <div className="ml-[200px] ">
                 <div>
                     <Header />
                 </div>
                 <div className="mt-[60px] mb-[80px] ">
-                    {component}
+                    {children}
                 </div>
             </div>
-            <PlayMusic />
-        </div>
-        // </MusicContext.Provider>
+            <PlayMusic ref={audioRef} />
+        </MusicContext.Provider>
     )
 }
 let path = [
     {
         path: '/:alias',
-        component: configComponent(<Singer />)
+        component: <ConfigComponent ><Singer /></ConfigComponent>
+    },
+        path: '/singer',
+        component: <ConfigComponent ><Singer /></ConfigComponent>
+
     },
     {
         path: '/album',
-        component: configComponent(<Album />)
+        component: <ConfigComponent ><Album /></ConfigComponent>
     },
-    // ===================================================  home pages    ==============================================
+    // // ===================================================  home pages    ==============================================
     {
         path: '/category',
-        component: configComponent(<Category />)
+        component: <ConfigComponent ><Category /></ConfigComponent>
     },
     {
         path: '/',
-        component: configComponent(<Discover />)
+        component: <ConfigComponent ><Discover /></ConfigComponent>
     },
     {
         path: '/mv/:id',
-        component: configComponent(<MV />)
+        component: <ConfigComponent ><MV /></ConfigComponent>
     },
     {
         path: '/mv',
-        component: configComponent(<MV />)
+        component: <ConfigComponent ><MV /></ConfigComponent>
     },
     {
         path: '/new-music',
-        component: configComponent(<NewMusic />)
+        component: <ConfigComponent ><NewMusic /></ConfigComponent>
     },
     {
         path: '/personal',
-        component: configComponent(<Personal />)
+        component: <ConfigComponent ><Personal /></ConfigComponent>
     },
     {
         path: '/top-zing',
-        component: configComponent(<TopZing />)
+        component: <ConfigComponent ><TopZing /></ConfigComponent>
     },
     {
         path: '/zing-chart',
-        component: configComponent(<ZingChart />)
+        component: <ConfigComponent ><ZingChart /></ConfigComponent>
     },
 ]
-
 
 function App() {
     return (
