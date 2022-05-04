@@ -56,8 +56,12 @@ const ConfigComponent = ({ children }) => {
 }
 let path = [
     {
+        path: '/:alias',
+        component: <ConfigComponent ><Singer /></ConfigComponent>
+    },
         path: '/singer',
         component: <ConfigComponent ><Singer /></ConfigComponent>
+
     },
     {
         path: '/album',
