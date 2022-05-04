@@ -8,7 +8,7 @@ import { MusicContext } from '../../App'
 const api = new ZingAPI();
 
 const NewMusic = () => {
-    const { videoId, setVideoId, playAudio, pauseAudio, createInfoAudio } = useContext(MusicContext)
+    const {  createInfoAudio } = useContext(MusicContext)
     const [listMusic, setListMusic] = useState([]);
 
     useEffect(() => {
