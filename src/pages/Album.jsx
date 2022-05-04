@@ -19,12 +19,12 @@ const Album = () => {
     const[itemsTopAlbum, setItemsTopAlbum] = useState([]);
     const[itemsTopSuggest, setItemsTopSuggest] = useState([]);
     const[itemsHotSongs, setItemsHotSongs] = useState([]);
-    const[itemsArtist, setItemsArtist] = useState([]);
+    const[itemsArtist, setItemsArtist, ] = useState([]);
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopAlbum = (res.data.data.topSuggest).slice(0, 1);
             setItemsTopAlbum(randomItemsTopAlbum);
-            console.log(itemsTopAlbum);
+            //console.log(itemsTopAlbum);
         });
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = (res.data.data.topSuggest).slice(0, 4);
@@ -36,12 +36,27 @@ const Album = () => {
             setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
             //console.log(res);
         });
-        await api.getDetailPlaylist("ZFFICOO7").then(res => {
-            const itemartist = (res.data.data.artists).slice(0,4)
-            setItemsArtist(itemartist);
-            //console.log(itemsArtist);
+        // await api.getDetailPlaylist("ZFFICOO7").then(res => {
+        //     const itemartist1 = (res.data.data.artists).slice(0,4);
+        //     const itemArtists1=[];
+        //     itemartist1.map((item, index)=>{
+        //         return(
+        //             //console.log(item.name),
+        //             api.getArtist(item.name).then(res => {
+        //                 console.log(res.data)
+        //             })
+        //         )
+        //     })
+            
+        //     //setItemsArtist(itemArtists1);
+        //     //console.log(itemsArtist);
+        // });
+        await api.getArtist('Hoàng Thùy Linh').then(res => {
+            
+            console.log(res);
         });
-    } 
+    }
+
     useEffect(async () => {
         getapi();
     }, []);
@@ -53,6 +68,7 @@ const Album = () => {
         sec < 10 ? res = res + ":" + 0 + sec.toString() : res = res + ":" + sec.toString();
         return res;
     }
+     
     // const [itemArtists, setItemArtists] = useState([
     //     {
     //         id: 1,
@@ -207,7 +223,7 @@ const Album = () => {
                 {
         itemsTopAlbum.map((item, index) => {
             return (
-                <div className='w-full h-full'>
+                <div className='w-full h-full mt-[10.5px]'>
                     <div className='relative group rounded-[3%] overflow-hidden'>
                         <img className='group-hover:scale-110 group-hover:brightness-50 duration-500 object-cover rounded-[3%]' src={item.thumbnailM}>
                         </img>
