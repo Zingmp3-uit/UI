@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ZingAPI from "../context/zing.context";
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ShuffleRoundedIcon from '@material-ui/icons/ShuffleRounded';
@@ -8,21 +9,57 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+//import AlbumLoader from "../components/SkeletonLoader/AlbumLoader";
+import ItemAlbum from '../components/ItemAlbum/ItemAlbum';
 const Album = () => {
     const api = new ZingAPI();
-    const [itemArtists, setItemArtists] = useState([])
+    const[itemsTopSuggest, setItemsTopSuggest] = useState([]);
+    const[itemsHotSongs, setItemsHotSongs] = useState([]);
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = (res.data.data.topSuggest).slice(0, 4);
-            setItemArtists(randomItemsTopSuggest);
+            setItemsTopSuggest(randomItemsTopSuggest);
             //console.log(res);
         });
 
-        // await api.getChartHome().then(res => {
-        //     setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
-        //     //console.log(res);
-        // });
+        await api.getChartHome().then(res => {
+            setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
+            //console.log(res);
+        });
     } 
+    useEffect(async () => {
+        getapi();
+    }, []);
+    function convertDuration(duration) {
+        var min = Math.floor(duration / 60);
+        let res;
+        min < 10 ? res = 0 + min.toString() : res = min.toString();
+        var sec = duration - min * 60;
+        sec < 10 ? res = res + ":" + 0 + sec.toString() : res = res + ":" + sec.toString();
+        return res;
+    }
+    const [itemArtists, setItemArtists] = useState([
+        {
+            id: 1,
+            name: 'NCT',
+            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/9/e/e/e/9eee7e94d4e1530370067c2d7bac929f.jpg'
+        },
+        {
+            id: 2,
+            name: 'NCT 127',
+            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/0/9/4/5/094502d5cae906eb9be005979edff647.jpg'
+        },
+        {
+            id: 3,
+            name: 'NCT U',
+            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/7/7/773932d903569e1dc72b2c850e3a8b21_1461308953.jpg'
+        },
+        {
+            id: 4,
+            name: 'EXO',
+            image_url: 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/avatars/a/8/5/d/a85df1e32e6d116a794edb107c26c117.jpg'
+        }
+    ])
     const [itemSongs, setItemSongs] = useState([
         {
             id: 1,
@@ -154,33 +191,102 @@ const Album = () => {
                 <div className="col-span-1"></div>
                 <div className="col-span-4">
                     <div className="py-[24px] px-[60px]">
+                        <div className='relative group h-[60px] flex w-full rounded-[5px]'>
+                            <div className="h-full  mt-[10.5px] ml-[10.5px] mb-[10.5px]">
+                                <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Bài hát</h2>
+                        
+                            </div>
+                            <div className="h-full  mt-[10.5px] ml-[51%] mb-[10.5px]">
+                                <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Album</h2>
+                        
+                            </div>
+                            <div className="h-full  mt-[10.5px] ml-[30%] mb-[10.5px] mr-[45.5px]">
+                                <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Thời gian</h2>
+                        
+                            </div>
+                        </div>
                         <div>
                         {
-                            itemSongs.map((item, index) => {
-                                return (
-                                    <div className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
-                                        <div className="flex flex-row items-center justify-around">
+                            // itemSongs.map((item, index) => {
+                            //     return (
+                            //         <div className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
+                            //             <div className="flex flex-row items-center justify-around">
                                             
                                             
+                            //             </div>
+                            //             <div className="flex flex-row">
+                            //                 <div className="w-10 h-10 rounded overflow-hidden mr-2">
+                            //                     <img src={item.image_url} alt="" />
+                            //                 </div>
+                            //                 <div>
+                            //                     <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
+                            //                     <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+                            //                 </div>
+                            //             </div>
+                            //             <div>
+                            //                 <span className="text-[14px] text-[#737373] font-medium">{item.album}</span>
+                            //             </div>
+                            //             <div className="flex flex-row justify-between">
+                            //                 <div>
+                            //                     <FavoriteRoundedIcon />
+                            //                 </div>
+                            //                 <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
+                            //             </div>
+                            //         </div>
+                            //     )
+                            // })
+                            itemsHotSongs.map((item, index) => {
+                                return(
+                                    <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]'>
+                                        <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
+                                        </img>
+
+                                        <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] cursor-pointer flex-row justify-around items-center">
+                                            <PlayArrowIcon></PlayArrowIcon>
                                         </div>
-                                        <div className="flex flex-row">
-                                            <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                                                <img src={item.image_url} alt="" />
+
+                                        <div className='h-full w-[50%] mt-[10.5px] ml-[10.5px] mb-[10.5px]'>
+                                            <div className='text-[11pt] font-bold  truncate ...'>
+                                                {item.title}
                                             </div>
-                                            <div>
-                                                <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                                <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+
+                                            <div className='text-[10pt] font-semibold text-slate-400 truncate ...'>
+                                                <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[0].alias}>
+                                                {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name}
+                                                </a>
+                                                {
+                                                    item.artists.length == 1 ? ""
+                                                    :
+                                                    <>
+                                                    <a>, </a>
+                                                    {
+                                                        item.artists.length == 2 ? 
+                                                        <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                        {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                        </a>
+                                                        :
+                                                        <>
+                                                            <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                            {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                            </a>
+
+                                                            <a>,...</a>
+                                                        </>
+                                                    }
+                                                    </>
+                                                }
                                             </div>
                                         </div>
-                                        <div>
-                                            <span className="text-[14px] text-[#737373] font-medium">{item.album}</span>
-                                        </div>
-                                        <div className="flex flex-row justify-between">
-                                            <div>
-                                                <FavoriteRoundedIcon />
-                                            </div>
-                                            <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
-                                        </div>
+                                        <div className="h-full  mt-[10.5px] mb-[10.5px]">
+                                            <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">{item.title}</h2>
+                        
+                                         </div>
+                                               
+                                        <div className="absolute right-[45.5px] top-[50%] translate-y-[-50%] translate-x-[100%] flex-row font-semibold text-[10pt] text-slate-400">
+                                        {
+                                            convertDuration(item.duration)
+                                        }
+                                        </div>                                            
                                     </div>
                                 )
                             })
@@ -195,6 +301,13 @@ const Album = () => {
                         <h2 className="text-[30px] font-bold leading-9 mr-[16px]">Nghệ sĩ tham gia</h2>
                         
                     </div>
+                    {/* <div className="flex flex-row my-6 pt-[1.5%]">
+                        <ItemAlbum 
+                        albumsList={itemsTopSuggest}
+                        isSubtitleClickable={true}
+                        >
+                        </ItemAlbum>
+                    </div> */}
                     <div className="flex flex-row my-6">
                         {
                             itemArtists.map((item, index) => {
@@ -207,7 +320,15 @@ const Album = () => {
                                         </div>
                                     </div>
                                     <h5 className="mt-[16px] text-base text-center hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                    <h6 className="mt-[4px] text-base text-center ">{item.like} quan tâm</h6>
+                                    <div className=' bg-[#6998AB] justify-center w-[60%] rounded-full mt-[10%] ml-[20%]'>
+                                    <div className='flex w-full h-full justify-center items-center text-sm font-semibold truncate ...'>
+                                        
+
+                                        <div className='w-[5px]'></div>
+
+                                        PHÁT NHẠC
+                                    </div>
+                                </div>  
                                 </div>  )
                             })
                         }  
@@ -222,26 +343,11 @@ const Album = () => {
                         
                     </div>
                     <div className="flex flex-row">
-                        {
-                            itemPlaylists.map((item, index) => {
-                                return (
-                                    <div className="flex flex-col justify-center p-[16px] cursor-pointer">
-                                        <div className="group  w-52 h-52 rounded overflow-hidden relative">
-                                            <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumd} alt="" />
-                                            <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
-                                                <CloseRoundedIcon />
-                                                <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
-                                                    <PlayArrowRoundedIcon />
-                                                </div>
-                                                <MoreHorizIcon />
-                                            </div>
-                                        </div>
-                                        <h5 className="mt-[16px] text-base hover:underline hover:text-[#7200a1] ">{item.name_id}</h5>
-                                        <h6 className="text-xs text-white opacity-50">{item.name}</h6>
-                                    </div>  
-                                )
-                            })
-                        }
+                    <ItemAlbum 
+                        albumsList={itemsTopSuggest}
+                        isSubtitleClickable={true}
+                        >
+                        </ItemAlbum>
                     </div>  
                 </div>
                 <div className="pt-[70px] pl-[60px] pr-[60px]">
@@ -260,26 +366,11 @@ const Album = () => {
                         </div>
                     </div>
                     <div className="flex flex-row">
-                        {
-                            itemPlaylists.map((item, index) => {
-                                return (
-                                    <div className="flex flex-col justify-center p-[16px] cursor-pointer">
-                                        <div className="group  w-52 h-52 rounded overflow-hidden relative">
-                                            <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumd} alt="" />
-                                            <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
-                                                <CloseRoundedIcon />
-                                                <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
-                                                    <PlayArrowRoundedIcon />
-                                                </div>
-                                                <MoreHorizIcon />
-                                            </div>
-                                        </div>
-                                        <h5 className="mt-[16px] text-base hover:underline hover:text-[#7200a1] ">{item.name_id}</h5>
-                                        <h6 className="text-xs text-white opacity-50">{item.name}</h6>
-                                    </div>  
-                                )
-                            })
-                        }
+                    <ItemAlbum 
+                        albumsList={itemsTopSuggest}
+                        isSubtitleClickable={true}
+                        >
+                        </ItemAlbum>
                     </div>  
                 </div>          
         </div>
