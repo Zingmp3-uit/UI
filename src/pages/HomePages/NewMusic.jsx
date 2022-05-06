@@ -5,10 +5,11 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import clsx from "clsx";
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { MusicContext } from '../../App'
+import { Link } from "react-router-dom";
 const api = new ZingAPI();
 
 const NewMusic = () => {
-    const {  createInfoAudio } = useContext(MusicContext)
+    const { createInfoAudio } = useContext(MusicContext)
     const [listMusic, setListMusic] = useState([]);
 
     useEffect(() => {
@@ -44,7 +45,19 @@ const NewMusic = () => {
                                 <img src={item.thumbnailM} alt="" className="h-[50px] w-[50px] mx-2" />
                                 <div>
                                     <p className="font-semibold text-[17px] hover:text-[rgb(204,116,191)]" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</p>
-                                    <p className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{item.artistsNames}</p>
+                                    {item.artists.map((artist, j) => {
+                                        if (j == item.artists.length - 1)
+                                            return (
+                                                <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                            )
+                                        else
+                                            return (
+                                                <>
+                                                    <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                    <span> ,</span>
+                                                </>
+                                            )
+                                    })}
                                 </div>
                             </div>
                         </div>
