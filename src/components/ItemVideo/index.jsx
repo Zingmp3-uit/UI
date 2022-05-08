@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 const ItemVideo = ({ props }) => {
     const { recommendMV } = props
 
+    
     return (
         <div>
             <p className='px-9 font-bold text-[30px] my-6'>Các bài hát liên quan</p>
