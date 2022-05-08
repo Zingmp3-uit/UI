@@ -24,6 +24,7 @@ import ZingChart from '../src/pages/HomePages/ZingChart'
 import Header from '../src/components/ConstComponent/Header'
 import SideBar from '../src/components/ConstComponent/SideBar'
 import PlayMusic from '../src/components/ConstComponent/PlayMusic'
+import OverLayer  from "./components/Overlayer";
 
 export const MusicContext = createContext()
 const ConfigComponent = ({ children }) => {
