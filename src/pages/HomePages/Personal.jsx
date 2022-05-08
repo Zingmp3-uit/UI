@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ZingAPI from '../../context/zing.context'
 
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
@@ -7,7 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Sector, Cell } from 'recharts';
 
 
-
+const api = new ZingAPI();
 const Personal = () => {
     // const api = new ZingAPI()
 
@@ -471,28 +471,57 @@ const Personal = () => {
         //     image: 'https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/zma-2021/imgs/duc-phuc.png'
         // },
     ])
+
+
+    useEffect(async () => {
+        await api.getHome(1).then((data) => {
+            setSlides(data.data.data.items[0].items)
+            setRecommends(data.data.data.items[3].items)
+            setRecommendsToday(data.data.data.items[4].items)
+            setXonesCorner(data.data.data.items[5].items)
+            console.log(data.data.data);
+        })
+    }, [])
+
+    useEffect(async () => {
+        await api.getTop100().then((data)=> {
+            setTop100(data.data.data[0].items)
+            console.log(data.data.data)
+        })
+    },[])
+
+    useEffect(async () => {
+        await api.getChartHome().then((data)=> {
+            setItemSongs(data.data.data.RTChart.items)
+        })
+    },[])
     return (
         <React.Fragment>
-            <div className="flex flex-row flex-wrap justify-center align-center my-4">
-                {
-                    slides.map((slide, index) => {
-                        return (
-                            <div key={index} className="flex w-[373px] h-[210px] bg-white rounded-lg align-center justify-center mx-2 my-10 overflow-hidden">
-                                <img src={slide.image_url} alt="" />
-                            </div>
-                        )
-                    })
-                }
+            <div className="px-[60px] py-8">
+                <div className="flex flex-row overflow-hidden">
+                    {
+                        slides.map((slide, index) => {
+
+                            return (
+                                <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                    <div key={index} className="flex w-[373px] h-[210px] bg-white rounded-lg overflow-hidden">
+                                        <img className="w-full object-cover" src={slide.banner} alt="" />
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
             <div className="px-[60px]">
                 <h3 className="text-xl text-white font-black">Có Thể Bạn Muốn Nghe</h3>
-                <div className="flex flex-row">
+                <div className="flex flex-row overflow-hidden">
                     {
                         recommends.map((item, index) => {
                             return (
                                 <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
-                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
+                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
                                             <FavoriteIcon />
                                             <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
@@ -501,19 +530,16 @@ const Personal = () => {
                                             <MoreHorizIcon />
                                         </div>
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1] ">{item.name}</h6>
-                                    <span className="text-base">
+                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h6>
+                                    {/* <span className="text-base text-[#797979]">
                                         {
-                                            item.singers.map((singer, index) => {
+                                            item.artists.map((artist, index) => {
                                                 return (
-                                                    <div className="inline">
-                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer}</a>
-                                                        <span className="text-[#797979] text-opacity-80">, </span>
-                                                    </div>
+                                                    <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{artist.name} </a>
                                                 )
                                             })
                                         }
-                                    </span>
+                                    </span> */}
                                 </div>
                             )
                         })
@@ -528,7 +554,7 @@ const Personal = () => {
                             return (
                                 <div className="flex flex-col pl-[32px] first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative cursor-pointer">
-                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
+                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
                                             <FavoriteIcon />
                                             <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
@@ -538,7 +564,7 @@ const Personal = () => {
                                         </div>
                                     </div>
                                     <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1] cursor-pointer">{item.title}</h6>
-                                    <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80" key={index}>{item.sub_title}</span>
+                                    <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "2" }} key={index}>{item.sortDescription}</span>
                                 </div>
                             )
                         })
@@ -553,7 +579,7 @@ const Personal = () => {
                             return (
                                 <div className="flex flex-col pl-[32px] first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative cursor-pointer">
-                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
+                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
                                             <FavoriteIcon />
                                             <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
@@ -563,7 +589,7 @@ const Personal = () => {
                                         </div>
                                     </div>
                                     <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1] cursor-pointer">{item.title}</h6>
-                                    <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80" key={index}>{item.sub_title}</span>
+                                    <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80" key={index}>{item.sortDescription}</span>
                                 </div>
                             )
                         })
@@ -588,13 +614,12 @@ const Personal = () => {
                                         </div>
                                     </div>
                                     <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]">{item.title}</h6>
-                                    <span className="text-base">
+                                    <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                         {
                                             item.singers.map((singer, index) => {
                                                 return (
                                                     <div className="inline">
-                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer}</a>
-                                                        <span className="text-[#797979] text-opacity-80">, </span>
+                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer} </a>
                                                     </div>
                                                 )
                                             })
@@ -620,33 +645,36 @@ const Personal = () => {
                             <div>
                                 {
                                     itemSongs.map((item, index) => {
-                                        return (
-                                            <div className="p-[10px] grid grid-cols-[1fr_3fr_1fr] items-center bg-[#ffffff] mt-2 bg-opacity-10">
-                                                <div className="flex flex-row items-center justify-around">
-                                                    {(index === 0) &&
-                                                        <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #4a90e2', 'color': 'rgba(0,0,0,0)' }}>{item.rate}</span>
-                                                    }
-                                                    {(index === 1) &&
-                                                        <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #50e3c2', 'color': 'rgba(0,0,0,0)' }}>{item.rate}</span>
-                                                    }
-                                                    {(index === 2) &&
-                                                        <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #e35050', 'color': 'rgba(0,0,0,0)' }}>{item.rate}</span>
-                                                    }
-                                                </div>
-                                                <div className="flex flex-row">
-                                                    <div className="w-14 h-14 rounded overflow-hidden mr-2">
-                                                        <img src={item.image_url} alt="" />
+                                        if(index < 3)
+                                        {
+                                            return (
+                                                <div className="p-[10px] grid grid-cols-[1fr_5fr_1fr] items-center bg-[#ffffff] mt-2 bg-opacity-10">
+                                                    <div className="flex flex-row items-center justify-around">
+                                                        {(index === 0) &&
+                                                            <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #4a90e2', 'color': 'rgba(0,0,0,0)' }}>{index + 1}</span>
+                                                        }
+                                                        {(index === 1) &&
+                                                            <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #50e3c2', 'color': 'rgba(0,0,0,0)' }}>{index + 1}</span>
+                                                        }
+                                                        {(index === 2) &&
+                                                            <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #e35050', 'color': 'rgba(0,0,0,0)' }}>{index + 1}</span>
+                                                        }
                                                     </div>
-                                                    <div>
-                                                        <h5 className="text-[18px] font-bold">{item.name}</h5>
-                                                        <h6 className="text-xs text-white font-bold hover:underline hover:text-[#c662ef] cursor-pointer">{item.artist}</h6>
+                                                    <div className="flex flex-row">
+                                                        <div className="w-14 h-14 rounded overflow-hidden mr-2">
+                                                            <img src={item.thumbnailM} alt="" />
+                                                        </div>
+                                                        <div className="flex flex-col  justify-center">
+                                                            <h5 className="text-[14px] font-bold">{item.title}</h5>
+                                                            <h6 className="text-xs text-white font-bold hover:underline hover:text-[#c662ef] cursor-pointer text-opacity-60">{item.artistsNames}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-row justify-between">
+                                                        <span className="text-[14px] text-white font-bold">10%</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-row justify-between">
-                                                    <span className="text-[14px] text-white font-bold">{item.percent}%</span>
-                                                </div>
-                                            </div>
-                                        )
+                                            )
+                                        }
                                     })
                                 }
                             </div>
@@ -675,8 +703,8 @@ const Personal = () => {
                 {
                     chartMenus.map((chartMenu, index) => {
                         return (
-                            <div key={index} className="flex w-[373px] h-[107px] bg-white rounded-lg align-center justify-center mx-2 my-4 overflow-hidden">
-                                <img src={chartMenu.image} alt="" />
+                            <div key={index} className="flex w-[373px] h-[107px] bg-white rounded-lg align-center justify-center mx-2 my-4 overflow-hidden group cursor-pointer ">
+                                <img src={chartMenu.image} alt="" className="group-hover:scale-110 duration-500"/>
                             </div>
                         )
                     })
@@ -695,13 +723,13 @@ const Personal = () => {
             </div>
             <div className="px-[60px] py-[24px]">
                 <h3 className="text-xl text-white font-black">Top 100</h3>
-                <div className="flex flex-row">
+                <div className="flex flex-row overflow-hidden">
                     {
                         top100.map((item, index) => {
                             return (
                                 <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
-                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
+                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
                                             <FavoriteIcon />
                                             <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
@@ -711,18 +739,18 @@ const Personal = () => {
                                         </div>
                                     </div>
                                     <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]">{item.title}</h6>
-                                    <span className="text-base">
+                                    {/* <span className="text-base">
                                         {
-                                            item.singers.map((singer, index) => {
+                                            item.artists.map((artist, index) => {
                                                 return (
                                                     <div className="inline">
-                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer}</a>
+                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{artist}</a>
                                                         <span className="text-[#797979] text-opacity-80">, </span>
                                                     </div>
                                                 )
                                             })
                                         }
-                                    </span>
+                                    </span> */}
                                 </div>
                             )
                         })

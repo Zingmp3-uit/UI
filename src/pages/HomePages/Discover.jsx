@@ -1,4 +1,5 @@
-    import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import ZingAPI from "../../context/zing.context";
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ShuffleRoundedIcon from '@material-ui/icons/ShuffleRounded';
@@ -8,6 +9,7 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 
+const api = new ZingAPI();
 
 const Discover = () => {
     const [itemArtists, setItemArtists] = useState([
@@ -163,6 +165,15 @@ const Discover = () => {
         }
     ])
 
+    useEffect(async () => {
+        await api.getChartHome().then((data) => {
+            setItemSongs(data.data.data.RTChart.items)
+            console.log(data.data)
+        })
+    }, [])
+
+
+
     return (
         <React.Fragment>
             <div className="w-full h-full">
@@ -177,7 +188,7 @@ const Discover = () => {
                         {
                             itemArtists.map((item, index) => {
                                 return (
-                                <div className="flex flex-col justify-center p-[16px] cursor-pointer">
+                                <div key={index} className="flex flex-col justify-center p-[16px] cursor-pointer">
                                     <div className="group  w-44 h-44 rounded-full overflow-hidden relative">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
                                         <div className="p-[8px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border rounded-full hidden group-hover:flex">
@@ -215,7 +226,7 @@ const Discover = () => {
                         {
                             itemPlaylists.map((item, index) => {
                                 return (
-                                    <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                    <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
                                         <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                             <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumd} alt="" />
                                             <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -286,27 +297,27 @@ const Discover = () => {
                                 {
                                     itemSongs.map((item, index) => {
                                         return (
-                                            <div className="p-[10px] grid grid-cols-[1fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
+                                            <div key={index} className="p-[10px] grid grid-cols-[1fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
                                                 <div>
                                                     <MusicNoteRoundedIcon />
                                                 </div>
                                                 <div className="flex flex-row">
                                                     <div className="w-10 h-10 rounded overflow-hidden mr-2">
-                                                        <img src={item.image_url} alt="" />
+                                                        <img src={item.thumbnail} alt="" />
                                                     </div>
                                                     <div>
-                                                        <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.name}</h5>
-                                                        <h6 className="text-xs text-white opacity-50">{item.artist}</h6>
+                                                        <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.title}</h5>
+                                                        <h6 className="text-xs text-white opacity-50">{item.artistsNames}</h6>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{item.album}</span>
+                                                    <span className="text-[14px] text-[#737373] font-medium">{item.album.title}</span>
                                                 </div>
                                                 <div className="flex flex-row justify-between">
                                                     <div>
                                                         <FavoriteRoundedIcon />
                                                     </div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{item.time}</span>
+                                                    <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
                                                 </div>
                                             </div>
                                         )
@@ -331,7 +342,7 @@ const Discover = () => {
                         {
                             itemAlbums.map((item, index) => {
                                 return (
-                                    <div className="flex flex-col justify-center p-[16px] cursor-pointer">
+                                    <div key={index} className="flex flex-col justify-center p-[16px] cursor-pointer">
                                         <div className="group w-52 h-52 rounded overflow-hidden relative">
                                             <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumd} alt="" />
                                             <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
