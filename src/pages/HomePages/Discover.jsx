@@ -471,6 +471,8 @@ const Discover = () => {
         //     image: 'https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/zma-2021/imgs/duc-phuc.png'
         // },
     ])
+    const [showDatas, setShowDatas] = useState([])
+    const [top3, setTop3] = useState([])
 
 
     useEffect(async () => {
@@ -479,22 +481,47 @@ const Discover = () => {
             setRecommends(data.data.data.items[3].items)
             setRecommendsToday(data.data.data.items[4].items)
             setXonesCorner(data.data.data.items[5].items)
-            console.log(data.data.data);
+            // console.log(data.data.data);
         })
     }, [])
 
     useEffect(async () => {
         await api.getTop100().then((data) => {
             setTop100(data.data.data[0].items)
-            console.log(data.data.data)
+            // console.log(data.data.data)
         })
     }, [])
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
             setItemSongs(data.data.data.RTChart.items)
+            for( var i=0; i< 3; i++)
+            {
+                top3.push(data.data.data.RTChart.items[i].encodeId)
+            }
+            // console.log(data.data.data.RTChart.chart.items[`${top3[0]}`][0].counter)
+            
+            for (var i = 0; i < 24; i++) {
+                if(i % 2 === 0){
+                    setShowDatas(prev => [...prev, {
+                        hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
+                        'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
+                        'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
+                        'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
+                    }])
+                }
+                // if(i % 2 === 0){
+                //     setShowDatas(prev => [...prev, {
+                //         hour: data.data.data.RTChart.chart.items.ZZ8FBUW9[i].hour + ":00",
+                //         'top1': data.data.data.RTChart.chart.items.ZZ8FBUW9[i].counter,
+                //         'top2': data.data.data.RTChart.chart.items.ZZA9OZIO[i].counter,
+                //         'top3': data.data.data.RTChart.chart.items.ZZAU7CAO[i].counter,
+                //     }])
+                // }
+            }
         })
     }, [])
+
     return (
         <React.Fragment>
             <div className="px-[60px] py-8">
@@ -503,7 +530,7 @@ const Discover = () => {
                         slides.map((slide, index) => {
 
                             return (
-                                <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
                                     <div key={index} className="flex w-[373px] h-[210px] bg-white rounded-lg overflow-hidden">
                                         <img className="w-full object-cover" src={slide.banner} alt="" />
                                     </div>
@@ -519,7 +546,7 @@ const Discover = () => {
                     {
                         recommends.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -552,7 +579,7 @@ const Discover = () => {
                     {
                         recommendstoday.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4">
+                                <div key={index}  className="flex flex-col pl-[32px] first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative cursor-pointer">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -577,7 +604,7 @@ const Discover = () => {
                     {
                         xonescorner.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4">
+                                <div key={index} className="flex flex-col pl-[32px] first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative cursor-pointer">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -602,7 +629,7 @@ const Discover = () => {
                     {
                         newSongs.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer">
+                                <div key={index} className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.image_url} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -647,7 +674,7 @@ const Discover = () => {
                                     itemSongs.map((item, index) => {
                                         if (index < 3) {
                                             return (
-                                                <div className="p-[10px] grid grid-cols-[1fr_5fr_1fr] items-center bg-[#ffffff] mt-2 bg-opacity-10">
+                                                <div key={index} className="p-[10px] grid grid-cols-[1fr_5fr_1fr] items-center bg-[#ffffff] mt-2 bg-opacity-10">
                                                     <div className="flex flex-row items-center justify-around">
                                                         {(index === 0) &&
                                                             <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #4a90e2', 'color': 'rgba(0,0,0,0)' }}>{index + 1}</span>
@@ -685,9 +712,9 @@ const Discover = () => {
                             <LineChart
                                 width={600}
                                 height={325}
-                                data={datas}
+                                data={showDatas}
                             >
-                                <XAxis dataKey="time" />
+                                <XAxis dataKey="hour" />
                                 {/* <Tooltip /> */}
                                 <CartesianGrid stroke="#737373" strokeOpacity={0.2} strokeDasharray={"3 3"} />
                                 <Line type="monotone" dataKey="top1" stroke="rgb(74, 144, 226)" yAxisId={0} />

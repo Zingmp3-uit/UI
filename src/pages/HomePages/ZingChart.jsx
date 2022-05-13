@@ -14,93 +14,44 @@ const ZingChart = () => {
     const [itemWeekUSSongs, setItemWeekUSSongs] = useState([])
     const [itemWeekKoreaSongs, setItemWeekKoreaSongs] = useState([])
     const [show, setShow] = useState(false)
-    const [datas, setDatas] = useState(
-        [
-            {
-                time: '20:00',
-                top1: 4000,
-                top2: 2400,
-                top3: 2400,
-            },
-            {
-                time: '22:00',
-                top1: 3000,
-                top2: 1398,
-                top3: 2210,
-            },
-            {
-                time: '00:00',
-                top1: 2000,
-                top2: 9800,
-                top3: 4290,
-            },
-            {
-                time: '02:00',
-                top1: 2780,
-                top2: 3908,
-                top3: 2000,
-            },
-            {
-                time: '04:00',
-                top1: 1890,
-                top2: 4800,
-                top3: 2181,
-            },
-            {
-                time: '06:00',
-                top1: 2390,
-                top2: 3800,
-                top3: 2500,
-            },
-            {
-                time: '08:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-            {
-                time: '10:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-            {
-                time: '12:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-            {
-                time: '14:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-            {
-                time: '16:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-            {
-                time: '18:00',
-                top1: 3490,
-                top2: 4300,
-                top3: 2100,
-            },
-        ]
-    )
-
+    const [datas, setDatas] = useState([])
+    const [showDatas, setShowDatas] = useState([])
+    const [top3, setTop3] = useState([])
+    // console.log(datas)
+    // // datas.map(data => console.log(data))
     useEffect(async () => {
         await api.getChartHome().then((data) => {
             setItemVNSongs(data.data.data.RTChart.items)
-            setDatas(data.data.data.RTChart.chart.items)
+            // setDatas(data.data.data.RTChart.chart.items)
             setItemWeekVNSongs(data.data.data.weekChart.vn.items)
             setItemWeekUSSongs(data.data.data.weekChart.us.items)
-            setItemWeekKoreaSongs(data.data.data.weekChart.korea.items)
-            console.log(data.data.data)
+            for( var i=0; i< 3; i++)
+            {
+                top3.push(data.data.data.RTChart.items[i].encodeId)
+            }
+            // console.log(data.data.data.RTChart.chart.items[`${top3[0]}`][0].counter)
+            
+            for (var i = 0; i < 24; i++) {
+                if(i % 2 == 0){
+                    setDatas(prev => [...prev, {
+                        hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
+                        'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
+                        'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
+                        'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
+                    }])
+                }
+                // if(i % 2 === 0){
+                //     setShowDatas(prev => [...prev, {
+                //         hour: data.data.data.RTChart.chart.items.ZZ8FBUW9[i].hour + ":00",
+                //         'top1': data.data.data.RTChart.chart.items.ZZ8FBUW9[i].counter,
+                //         'top2': data.data.data.RTChart.chart.items.ZZA9OZIO[i].counter,
+                //         'top3': data.data.data.RTChart.chart.items.ZZAU7CAO[i].counter,
+                //     }])
+                // }
+            }
         })
     }, [])
+
 
     const handleShow = () => {
         setShow(!show)
@@ -123,7 +74,7 @@ const ZingChart = () => {
                                 height={400}
                                 data={datas}
                             >
-                                <XAxis dataKey="time" />
+                                <XAxis dataKey="hour" />
                                 {/* <Tooltip /> */}
                                 <CartesianGrid stroke="#737373" strokeOpacity={0.2} strokeDasharray={"3 3"} />
                                 <Line type="monotone" dataKey="top1" stroke="rgb(74, 144, 226)" yAxisId={0} />
@@ -249,7 +200,7 @@ const ZingChart = () => {
                                                             <div className="flex flex-row items-center justify-around">
                                                                 <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7' }}>{index + 1}</span>
                                                                 <div>
-                                                                    <RemoveRoundedIcon style={{fontSize: "14px"}} />
+                                                                    <RemoveRoundedIcon style={{ fontSize: "14px" }} />
                                                                 </div>
                                                             </div>
                                                             <div className="grid grid-cols-[10fr_1fr_39fr]">
@@ -258,8 +209,8 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
                                                                 </div>
                                                             </div>
                                                             <div className="flex flex-row justify-between">
@@ -294,7 +245,7 @@ const ZingChart = () => {
                                                             <div className="flex flex-row items-center justify-around">
                                                                 <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7' }}>{index + 1}</span>
                                                                 <div>
-                                                                    <RemoveRoundedIcon style={{fontSize: "14px"}} />
+                                                                    <RemoveRoundedIcon style={{ fontSize: "14px" }} />
                                                                 </div>
                                                             </div>
                                                             <div className="grid grid-cols-[10fr_1fr_39fr]">
@@ -303,8 +254,8 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
                                                                 </div>
                                                             </div>
                                                             <div className="flex flex-row justify-between">
@@ -339,7 +290,7 @@ const ZingChart = () => {
                                                             <div className="flex flex-row items-center justify-around">
                                                                 <span className="font-sans text-3xl font-bold" style={{ '-webkit-text-stroke': '1px #ffffff', 'color': 'rgba(0,0,0,0)', 'opacity': '0.7' }}>{index + 1}</span>
                                                                 <div >
-                                                                    <RemoveRoundedIcon style={{fontSize: "14px"}} />
+                                                                    <RemoveRoundedIcon style={{ fontSize: "14px" }} />
                                                                 </div>
                                                             </div>
                                                             <div className="grid grid-cols-[10fr_1fr_39fr]">
@@ -348,8 +299,8 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{"display" : "-webkit-box", "-webkit-box-orient" : "vertical",  "-webkit-line-clamp" : "1"}}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
+                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
                                                                 </div>
                                                             </div>
                                                             <div className="flex flex-row justify-between">
