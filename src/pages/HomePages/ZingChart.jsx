@@ -16,7 +16,7 @@ const ZingChart = () => {
     const [show, setShow] = useState(false)
     const [datas, setDatas] = useState([])
     const [showDatas, setShowDatas] = useState([])
-    const [top3, setTop3] = useState([])
+    // const [top3, setTop3] = useState([])
     // console.log(datas)
     // // datas.map(data => console.log(data))
     useEffect(async () => {
@@ -25,20 +25,22 @@ const ZingChart = () => {
             // setDatas(data.data.data.RTChart.chart.items)
             setItemWeekVNSongs(data.data.data.weekChart.vn.items)
             setItemWeekUSSongs(data.data.data.weekChart.us.items)
+            let top3 = []
             for( var i=0; i< 3; i++)
             {
                 top3.push(data.data.data.RTChart.items[i].encodeId)
             }
             // console.log(data.data.data.RTChart.chart.items[`${top3[0]}`][0].counter)
             
+            let a = []
             for (var i = 0; i < 24; i++) {
                 if(i % 2 == 0){
-                    setDatas(prev => [...prev, {
+                    a.push({
                         hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
                         'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
                         'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
                         'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
-                    }])
+                    })
                 }
                 // if(i % 2 === 0){
                 //     setShowDatas(prev => [...prev, {
@@ -49,6 +51,7 @@ const ZingChart = () => {
                 //     }])
                 // }
             }
+            setDatas(a)
         })
     }, [])
 
