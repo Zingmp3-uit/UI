@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext  } from 'react'
 import ZingAPI from "../../context/zing.context";
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Sector, Cell } from 'recharts';
+import { MusicContext } from '../../App'
+import { Link } from "react-router-dom";
+
 
 const api = new ZingAPI();
 
 const ZingChart = () => {
+    const { createInfoAudio } = useContext(MusicContext)
     const [itemVNSongs, setItemVNSongs] = useState([])
     const [itemWeekVNSongs, setItemWeekVNSongs] = useState([])
     const [itemWeekUSSongs, setItemWeekUSSongs] = useState([])
@@ -25,15 +29,16 @@ const ZingChart = () => {
             // setDatas(data.data.data.RTChart.chart.items)
             setItemWeekVNSongs(data.data.data.weekChart.vn.items)
             setItemWeekUSSongs(data.data.data.weekChart.us.items)
+            setItemWeekKoreaSongs(data.data.data.weekChart.korea.items)
+            console.log(data.data.data.RTChart.chart)
             let top3 = []
-            for( var i=0; i< 3; i++)
-            {
+            for (var i = 0; i < 3; i++) {
                 top3.push(data.data.data.RTChart.items[i].encodeId)
             }
-            
+
             let a = []
             for (var i = 0; i < 24; i++) {
-                if(i % 2 == 0){
+                if (i % 2 == 0) {
                     a.push({
                         hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
                         'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
@@ -46,7 +51,11 @@ const ZingChart = () => {
         })
     }, [])
 
-
+    const formatTime = (time) => {
+        let p = (time / 60 - 1).toFixed();
+        let s = time - p * 60
+        return `${p} : ${s}`
+    }
     const handleShow = () => {
         setShow(!show)
     }
@@ -107,8 +116,24 @@ const ZingChart = () => {
                                                     <img src={item.thumbnailM} alt="" />
                                                 </div>
                                                 <div>
-                                                    <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.title}</h5>
-                                                    <h6 className="text-xs text-white opacity-50">{item.artistsNames}</h6>
+                                                    <h5 className="text-base cursor-default" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                    <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                        {
+                                                            item.artists.map((artist, j) => {
+                                                                if (j == item.artists.length - 1)
+                                                                    return (
+                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                    )
+                                                                else
+                                                                    return (
+                                                                        <>
+                                                                            <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                            <span> ,</span>
+                                                                        </>
+                                                                    )
+                                                            })
+                                                        }
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div>
@@ -118,12 +143,12 @@ const ZingChart = () => {
                                                 <div>
                                                     <FavoriteRoundedIcon />
                                                 </div>
-                                                <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                             </div>
                                         </div>
                                     )
                                 }
-                                else {
+                                else {  
                                     return (
                                         show &&
                                         <div key={index} className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
@@ -149,8 +174,24 @@ const ZingChart = () => {
                                                     <img src={item.thumbnailM} alt="" />
                                                 </div>
                                                 <div>
-                                                    <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.title}</h5>
-                                                    <h6 className="text-xs text-white opacity-50">{item.artistsNames}</h6>
+                                                    <h5 className="text-base cursor-default overflow-hidden" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                    <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                        {
+                                                            item.artists.map((artist, j) => {
+                                                                if (j == item.artists.length - 1)
+                                                                    return (
+                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                    )
+                                                                else
+                                                                    return (
+                                                                        <>
+                                                                            <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                            <span> ,</span>
+                                                                        </>
+                                                                    )
+                                                            })
+                                                        }
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div>
@@ -160,7 +201,7 @@ const ZingChart = () => {
                                                 <div>
                                                     <FavoriteRoundedIcon />
                                                 </div>
-                                                <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                             </div>
                                         </div>
                                     )
@@ -203,12 +244,28 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)} style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || 'title'}</h5>
+                                                                    <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                                        {
+                                                                            item.artists.map((artist, j) => {
+                                                                                if (j == item.artists.length - 1)
+                                                                                    return (
+                                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                    )
+                                                                                else
+                                                                                    return (
+                                                                                        <>
+                                                                                            <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                            <span> ,</span>
+                                                                                        </>
+                                                                                    )
+                                                                            })
+                                                                        }
+                                                                    </span>
                                                                 </div>
                                                             </div>
-                                                            <div className="flex flex-row justify-between">
-                                                                <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                            <div className="flex flex-row justify-end">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                                             </div>
                                                         </div>
                                                     )
@@ -248,12 +305,28 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)} style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || 'title'}</h5>
+                                                                    <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                                        {
+                                                                            item.artists.map((artist, j) => {
+                                                                                if (j == item.artists.length - 1)
+                                                                                    return (
+                                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                    )
+                                                                                else
+                                                                                    return (
+                                                                                        <>
+                                                                                            <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                            <span> ,</span>
+                                                                                        </>
+                                                                                    )
+                                                                            })
+                                                                        }
+                                                                    </span>
                                                                 </div>
                                                             </div>
-                                                            <div className="flex flex-row justify-between">
-                                                                <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                            <div className="flex flex-row justify-end">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                                             </div>
                                                         </div>
                                                     )
@@ -293,12 +366,26 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm hover:underline hover:text-[#7200a1] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h5>
-                                                                    <h6 className="text-xs text-white opacity-50 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.artistsNames}</h6>
+                                                                    <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)} style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || 'title'}</h5>
+                                                                    {
+                                                                        item.artists.map((artist, j) => {
+                                                                            if (j == item.artists.length - 1)
+                                                                                return (
+                                                                                    <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                )
+                                                                            else
+                                                                                return (
+                                                                                    <>
+                                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                        <span> ,</span>
+                                                                                    </>
+                                                                                )
+                                                                        })
+                                                                    }
                                                                 </div>
                                                             </div>
-                                                            <div className="flex flex-row justify-between">
-                                                                <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                            <div className="flex flex-row justify-end">
+                                                                <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                                             </div>
                                                         </div>
                                                     )

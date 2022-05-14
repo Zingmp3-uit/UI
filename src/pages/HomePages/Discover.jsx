@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import ZingAPI from '../../context/zing.context'
 
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Sector, Cell } from 'recharts';
+import { MusicContext } from '../../App'
+import { Link } from 'react-router-dom';
 
 const api = new ZingAPI();
 
@@ -24,6 +26,7 @@ const Discover = () => {
     //     // api.getTop100()
     //     //     .then(res => console.log(res))
     // }
+    const { createInfoAudio } = useContext(MusicContext)
     const [musicPartners, setMusicPartners] = useState([
         {
             id: 1,
@@ -368,38 +371,7 @@ const Discover = () => {
             },
         ]
     )
-    const [itemSongs, setItemSongs] = useState([
-        {
-            id: 1,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg",
-            rate: 1,
-            percent: 42
-        },
-        {
-            id: 2,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg",
-            rate: 2,
-            percent: 36
-        },
-        {
-            id: 3,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg",
-            rate: 3,
-            percent: 22
-        },
-    ])
+    const [itemSongs, setItemSongs] = useState([])
     const [chartMenus, setChartMenus] = useState([
         {
             id: 1,
@@ -472,7 +444,6 @@ const Discover = () => {
         // },
     ])
     const [showDatas, setShowDatas] = useState([])
-    const [top3, setTop3] = useState([])
 
 
     useEffect(async () => {
@@ -495,32 +466,29 @@ const Discover = () => {
     useEffect(async () => {
         await api.getChartHome().then((data) => {
             setItemSongs(data.data.data.RTChart.items)
-            for( var i=0; i< 3; i++)
-            {
+            console.log(data.data.data)
+            let top3 = []
+            for (var i = 0; i < 3; i++) {
                 top3.push(data.data.data.RTChart.items[i].encodeId)
             }
-            // console.log(data.data.data.RTChart.chart.items[`${top3[0]}`][0].counter)
-            
+
+            let a = []
             for (var i = 0; i < 24; i++) {
-                if(i % 2 === 0){
-                    setShowDatas(prev => [...prev, {
+                if (i % 2 == 0) {
+                    a.push({
                         hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
                         'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
                         'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
                         'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
-                    }])
+                    })
                 }
-                // if(i % 2 === 0){
-                //     setShowDatas(prev => [...prev, {
-                //         hour: data.data.data.RTChart.chart.items.ZZ8FBUW9[i].hour + ":00",
-                //         'top1': data.data.data.RTChart.chart.items.ZZ8FBUW9[i].counter,
-                //         'top2': data.data.data.RTChart.chart.items.ZZA9OZIO[i].counter,
-                //         'top3': data.data.data.RTChart.chart.items.ZZAU7CAO[i].counter,
-                //     }])
-                // }
             }
+            setShowDatas(a)
+
+            // console(data.data.data.RTChart.chart.items)
         })
     }, [])
+    
 
     return (
         <React.Fragment>
@@ -579,7 +547,7 @@ const Discover = () => {
                     {
                         recommendstoday.map((item, index) => {
                             return (
-                                <div key={index}  className="flex flex-col pl-[32px] first:pl-0 mt-4">
+                                <div key={index} className="flex flex-col pl-[32px] first:pl-0 mt-4">
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative cursor-pointer">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -643,13 +611,26 @@ const Discover = () => {
                                     <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]">{item.title}</h6>
                                     <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                         {
-                                            item.singers.map((singer, index) => {
-                                                return (
-                                                    <div className="inline">
-                                                        <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer} </a>
-                                                    </div>
-                                                )
-                                            })
+                                            // item.singers.map((singer, index) => {
+                                            //     return (
+                                            //         <div className="inline">
+                                            //             <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{singer} </a>
+                                            //         </div>
+                                            //     )
+                                            // })
+                                            // item.singers.map((singer, j) => {
+                                            //     if (j == item.singers.length - 1)
+                                            //         return (
+                                            //             <Link to={'/' + singer.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{singer}</Link>
+                                            //         )
+                                            //     else
+                                            //         return (
+                                            //             <>
+                                            //                 <Link to={'/' + singer.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{singer}</Link>
+                                            //                 <span> ,</span>
+                                            //             </>
+                                            //         )
+                                            // })
                                         }
                                     </span>
                                 </div>
@@ -691,8 +672,24 @@ const Discover = () => {
                                                             <img src={item.thumbnailM} alt="" />
                                                         </div>
                                                         <div className="flex flex-col  justify-center">
-                                                            <h5 className="text-[14px] font-bold">{item.title}</h5>
-                                                            <h6 className="text-xs text-white font-bold hover:underline hover:text-[#c662ef] cursor-pointer text-opacity-60">{item.artistsNames}</h6>
+                                                            <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)}>{item.title}</h5>
+                                                            <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                                {
+                                                                    item.artists.map((artist, j) => {
+                                                                        if (j == item.artists.length - 1)
+                                                                            return (
+                                                                                <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                            )
+                                                                        else
+                                                                            return (
+                                                                                <>
+                                                                                    <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                                    <span> ,</span>
+                                                                                </>
+                                                                            )
+                                                                    })
+                                                                }
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-row justify-between">
