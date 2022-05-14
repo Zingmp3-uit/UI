@@ -30,7 +30,6 @@ const ZingChart = () => {
             {
                 top3.push(data.data.data.RTChart.items[i].encodeId)
             }
-            // console.log(data.data.data.RTChart.chart.items[`${top3[0]}`][0].counter)
             
             let a = []
             for (var i = 0; i < 24; i++) {
@@ -42,14 +41,6 @@ const ZingChart = () => {
                         'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
                     })
                 }
-                // if(i % 2 === 0){
-                //     setShowDatas(prev => [...prev, {
-                //         hour: data.data.data.RTChart.chart.items.ZZ8FBUW9[i].hour + ":00",
-                //         'top1': data.data.data.RTChart.chart.items.ZZ8FBUW9[i].counter,
-                //         'top2': data.data.data.RTChart.chart.items.ZZA9OZIO[i].counter,
-                //         'top3': data.data.data.RTChart.chart.items.ZZAU7CAO[i].counter,
-                //     }])
-                // }
             }
             setDatas(a)
         })
