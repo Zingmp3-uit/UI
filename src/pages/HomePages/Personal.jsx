@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext  } from 'react'
 import ZingAPI from "../../context/zing.context";
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -8,10 +8,13 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+import { MusicContext } from '../../App'
+import { Link } from "react-router-dom";
 
 
 const api = new ZingAPI();
 const Personal = () => {
+    const { createInfoAudio } = useContext(MusicContext)
     const [itemArtists, setItemArtists] = useState([
         {
             id: 1,
@@ -61,118 +64,22 @@ const Personal = () => {
         }
     ])
     const [itemSongs, setItemSongs] = useState([
-        {
-            id: 1,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 2,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 3,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 4,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 5,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 6,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 7,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 8,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 9,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        },
-        {
-            id: 10,
-            name: "My everything",
-            artist: "NCT U",
-            album: "NCT RESONANCE Pt. 2 - The 2nd Album",
-            time: "03:41",
-            image_url: "https://photo-resize-zmp3.zadn.vn/w94_r1x1_webp/cover/8/a/0/5/8a05e1d07f1c88e7093eac159682a341.jpg"
-        }
     ])
     const [itemAlbums, setItemAlbums] = useState([
-        {
-            id: 1,
-            name: "1X1=1 (To Be One)",
-            thumd: "https://photo-resize-zmp3.zadn.vn/w320_r1x1_webp/covers/b/8/b82af64f22e1aa912b8849c6948bc705_1502097455.jpg"
-        },
-        {
-            id: 2,
-            name: "1X1=1 (To Be One)",
-            thumd: "https://photo-resize-zmp3.zadn.vn/w320_r1x1_webp/covers/b/8/b82af64f22e1aa912b8849c6948bc705_1502097455.jpg"
-        },
-        {
-            id: 3,
-            name: "1X1=1 (To Be One)",
-            thumd: "https://photo-resize-zmp3.zadn.vn/w320_r1x1_webp/covers/b/8/b82af64f22e1aa912b8849c6948bc705_1502097455.jpg"
-        },
-        {
-            id: 4,
-            name: "1X1=1 (To Be One)",
-            thumd: "https://photo-resize-zmp3.zadn.vn/w320_r1x1_webp/covers/b/8/b82af64f22e1aa912b8849c6948bc705_1502097455.jpg"
-        }
     ])
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
             setItemSongs(data.data.data.RTChart.items)
-            console.log(data.data)
+            console.log(data.data.data.RTChart.items)
         })
     }, [])
 
-
+    const formatTime = (time) => {
+        let p = (time / 60 - 1).toFixed();
+        let s = time - p * 60
+        return `${p} : ${s}`
+    }
 
     return (
         <React.Fragment>
@@ -306,8 +213,22 @@ const Personal = () => {
                                                         <img src={item.thumbnail} alt="" />
                                                     </div>
                                                     <div>
-                                                        <h5 className="text-base hover:underline hover:text-[#7200a1] ">{item.title}</h5>
-                                                        <h6 className="text-xs text-white opacity-50">{item.artistsNames}</h6>
+                                                        <h5 className="text-base cursor-default overflow-hidden" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                        <span className="text-xs text-white opacity-90 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                            {item.artists.map((artist, j) => {
+                                                                if (j == item.artists.length - 1)
+                                                                    return (
+                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                    )
+                                                                else
+                                                                    return (
+                                                                        <>
+                                                                            <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                            <span> ,</span>
+                                                                        </>
+                                                                    )
+                                                            })}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -317,7 +238,7 @@ const Personal = () => {
                                                     <div>
                                                         <FavoriteRoundedIcon />
                                                     </div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{item.duration}</span>
+                                                    <span className="text-[14px] text-[#737373] font-medium">{formatTime(item.duration)}</span>
                                                 </div>
                                             </div>
                                         )
