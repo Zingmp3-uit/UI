@@ -25,8 +25,8 @@ const Album = () => {
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopAlbum = (res.data.data.topSuggest).slice(0, 1);
-            setItemsTopAlbum(randomItemsTopAlbum);
-            console.log(itemsTopSuggest);
+            setItemsTopAlbum(randomItemsTopAlbum)
+            console.log(itemsTopAlbum);
         });
         await api.search("Nhạc Việt").then(res => {
             const randomItemsTopSuggest = (res.data.data.topSuggest).slice(0, 4);
@@ -48,7 +48,7 @@ const Album = () => {
             const itemArtists1=[];
             itemartist1.map((item, index)=>{
                 return(
-                    //console.log(item.name),
+                    console.log(item.name),
                     api.getArtist(item.alias).then(res => {
                         itemArtists1.push(res.data.data);
                         //console.log(itemArtists1);
@@ -57,7 +57,7 @@ const Album = () => {
             })
             
             setItemsArtist(itemArtists1);
-            console.log(itemsArtist);
+            console.log(itemArtists1);
         });
         // await api.getArtist('Hoàng Thùy Linh').then(res => {
             
@@ -124,6 +124,16 @@ const Album = () => {
                         <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
                             {item.releaseDateText}
                         </div>
+                        <div className=' bg-[#6998AB] justify-center w-[60%] hover:bg-[#406882] rounded-full mt-[5%] ml-[20%]'>
+                            <div className='flex w-full h-full justify-center  items-center text-sm font-semibold truncate ...'>
+                                            
+                            <PlayArrowIcon></PlayArrowIcon>
+                            <div className='w-[5px]'></div>
+
+                            PHÁT NGẪU NHIÊN
+                            </div>
+                        </div>
+                        
                     
                 </div>
             )

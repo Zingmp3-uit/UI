@@ -34,29 +34,15 @@ function ItemArtists(props) {
                     <div className='pt-[2%] font-bold text-[9pt] text-center  truncate ... hover:text-[#B1D0E0] hover:cursor-pointer'>
                         {(item.totalFollow % 1000) + 'K quan tâm'}
                     </div>
+                    <div className=' bg-[#6998AB] justify-center w-[60%] hover:bg-[#406882] rounded-full mt-[10%] ml-[20%]'>
+                        <div className='flex w-full h-full justify-center  items-center text-sm font-semibold truncate ...'>
+                                        
 
+                        <div className='w-[5px]'></div>
 
-                    {/* {
-                        isSubtitleClickable == true ?
-                        <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[0].alias}>
-                                {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name} 
-                            </a>
-                            <a>, </a>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[1].alias}>
-                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
-                            </a>
-                            <a>, </a>
-                            <a className='hover:text-[#B1D0E0] hover:underline hover:cursor-pointer' href={item.artists[2].alias}>
-                                {item.artists[2].spotlight == true ? item.artists[2].name + "★" : item.artists[2].name}
-                            </a>
-                            <a>...</a>
+                        Quan tâm
                         </div>
-                        :
-                        <div className='pt-[2%] text-slate-400 font-semibold text-[11pt]'>
-                            {item.releaseDateText}
-                        </div>
-                    } */}
+                    </div>  
                 </div>
             )
         })
