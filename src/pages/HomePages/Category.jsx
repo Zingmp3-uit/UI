@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 //API
 import ZingAPI from "../../context/zing.context";
@@ -176,6 +177,7 @@ const Category = () => {
                 }                               
             </div>
         </div>
+
     )
 }
 
