@@ -47,7 +47,7 @@ const ConfigComponent = ({ children }) => {
                 <div>
                     <Header />
                 </div>
-                <div className="mt-[60px] mb-[80px] ">
+                <div className="mt-[60px] mb-[120px] ">
                     {children}
                 </div>
             </div>
@@ -60,11 +60,6 @@ let path = [
     {
         path: '/:alias',
         component: <ConfigComponent ><Singer /></ConfigComponent>
-    },
-    {
-        path: '/singer',
-        component: <ConfigComponent ><Singer /></ConfigComponent>
-
     },
     {
         path: '/album',

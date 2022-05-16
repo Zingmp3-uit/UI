@@ -122,7 +122,7 @@ const MV = () => {
                                 </p>
                                 <p style={{ fontSize: '15px' }} className='text-[#B1D0E0]		 cursor-pointer hover:text-[rgb(204,116,191)]'>
                                     {item.artists.map((artist, i) => (
-                                        <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                        <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]' key={i}>
                                             <Link to='' >{artist.name}</Link>
                                             {i !== item.artists.length - 1 ? <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
                                         </span>

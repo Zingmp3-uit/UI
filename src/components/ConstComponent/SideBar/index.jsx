@@ -72,7 +72,7 @@ const SideBar = () => {
             <div>
                 {titlePath.map((item, index) => (
                     <div key={index} >
-                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#1A374D] cursor-pointer',{'bg-[#406882]': activePath === item.path })}>
+                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#406882] cursor-pointer',{'bg-[#406882]': activePath === item.path })}>
                             {item.icon}
                             <p className='text-[18px] font-semibold'>{item.title}</p>
                         </Link>

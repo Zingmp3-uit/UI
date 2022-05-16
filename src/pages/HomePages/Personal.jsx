@@ -213,7 +213,7 @@ const Personal = () => {
                                                         <img src={item.thumbnail} alt="" />
                                                     </div>
                                                     <div>
-                                                        <h5 className="text-base cursor-default overflow-hidden" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                        <h5 className="text-base cursor-pointer overflow-hidden hover:text-[rgb(204,116,191)]" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
                                                         <span className="text-xs text-white opacity-90 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                                             {item.artists.map((artist, j) => {
                                                                 if (j == item.artists.length - 1)

@@ -118,7 +118,7 @@ const Category = () => {
                             {
                                 itemsHotSongs.map((item, index) => {
                                     return(
-                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]'>
+                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]' key={index}>
                                             <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
                                             </img>
 
