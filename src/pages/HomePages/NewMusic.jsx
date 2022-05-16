@@ -14,8 +14,8 @@ const NewMusic = () => {
 
     useEffect(() => {
         api.getNewReleaseChart().then((data) => {
-            setListMusic(data.data.data.items)
-            console.log(data.data.data.items);
+            setListMusic(data.data.items)
+            console.log(data.data.items);
         })
     }, [])
     const formatTime = (time) => {

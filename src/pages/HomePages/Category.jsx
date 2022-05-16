@@ -18,13 +18,13 @@ const Category = () => {
 
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
-            const randomItemsTopSuggest = shuffle(res.data.data.topSuggest).slice(0, 4);
+            const randomItemsTopSuggest = shuffle(res.data.topSuggest).slice(0, 4);
             setItemsTopSuggest(randomItemsTopSuggest);
             //console.log(res);
         });
 
         await api.getChartHome().then(res => {
-            setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
+            setItemsHotSongs(res.data.weekChart.vn.items.slice(0, 15));
             //console.log(res);
         });
     } 

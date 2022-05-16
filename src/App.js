@@ -62,7 +62,7 @@ let path = [
         component: <ConfigComponent ><Singer /></ConfigComponent>
     },
     {
-        path: '/album',
+        path: '/album/:alias/:id',
         component: <ConfigComponent ><Album /></ConfigComponent>
     },
     // // ===================================================  home pages    ==============================================

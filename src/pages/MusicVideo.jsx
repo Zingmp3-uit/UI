@@ -23,7 +23,7 @@ const MusicVideo = () => {
 
     useEffect(async () => {
         await api.getVideo(window.location.pathname.split('/')[2]).then((data) => {
-            let list = data.data.data
+            let list = data.data
             console.log(list, list.streaming.mp4['720p']);
             setDataMV(list)
             setRecommendMV(list.recommends)

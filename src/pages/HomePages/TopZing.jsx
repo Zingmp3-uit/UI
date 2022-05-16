@@ -25,12 +25,12 @@ const TopZing = () => {
             //console.log(res);
         });
         await api.getTop100().then(res => {
-            const randomItemsTop100 = ((res.data.data));
+            const randomItemsTop100 = ((res.data));
             setItemsTop100VietNam(randomItemsTop100[1].items.slice(0,4));
             //console.log(itemsTop100Noibat);
         });
         await api.getTop100().then(res => {
-            const randomItemsTop100AM = ((res.data.data));
+            const randomItemsTop100AM = ((res.data));
             setItemsTop100AuMy(randomItemsTop100AM[3].items.slice(0,4));
             //console.log(itemsTop100Noibat);
         });

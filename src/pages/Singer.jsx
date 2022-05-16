@@ -29,11 +29,11 @@ const Singer = () => {
     const getapi = async () => {
         await api.getArtist(param.alias).then(res => {
             console.log(res);
-            setInfo(res.data.data);
+            setInfo(res.data);
         });
 
         await api.getArtist(param.alias).then(res => {
-            var sections = res.data.data.sections;
+            var sections = res.data.sections;
 
             setSongs(sections[0].items);
 
@@ -126,7 +126,7 @@ const Singer = () => {
     }
 
     return (
-        <div className='relative w-full h-screen'>
+        <div className='relative w-full h-screen mb-4'>
             <div className='relative w-full h-1/2 bg-[#406882]'>
                 <img className='absolute w-full h-full object-cover mix-blend-multiply blur-xl' src={info.thumbnailM}></img>
 

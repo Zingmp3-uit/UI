@@ -70,8 +70,8 @@ const Personal = () => {
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
-            setItemSongs(data.data.data.RTChart.items)
-            console.log(data.data.data.RTChart.items)
+            setItemSongs(data.data.RTChart.items)
+            console.log(data.data.RTChart.items)
         })
     }, [])
 

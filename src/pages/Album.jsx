@@ -15,56 +15,44 @@ import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import ItemAlbum from '../components/ItemAlbum/ItemAlbum';
 import ItemArtists from '../components/ItemArtists/ItemArtists';
 
+import { useParams, useNavigate } from 'react-router-dom';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+
 const Album = () => {
+    const { alias, id } = useParams();
+    const navigate = useNavigate();
     const api = new ZingAPI();
-    const [itemsTopAlbum, setItemsTopAlbum] = useState([]);
+    const [album, setAlbum] = useState(null);
+    const [itemsTopAlbum, setItemsTopAlbum] = useState([]);//
+    const [itemsHotSongs, setItemsHotSongs] = useState([]);//
+
     const [itemsTopSuggest, setItemsTopSuggest] = useState([]);
     const [itemsTopSuggest1, setItemsTopSuggest1] = useState([]);
-    const [itemsHotSongs, setItemsHotSongs] = useState([]);
-    const [itemsArtist, setItemsArtist,] = useState([]);
+    const [artistAttend, setArtistAttend] = useState([]);
 
 
     useEffect(async () => {
-        await api.search("Nhạc Việt").then(res => {
-            const randomItemsTopAlbum = (res.data.data.topSuggest).slice(0, 1);
-            setItemsTopAlbum(randomItemsTopAlbum)
-            console.log(itemsTopAlbum);
-        });
-        await api.search("Nhạc Việt").then(res => {
-            const randomItemsTopSuggest = (res.data.data.topSuggest).slice(0, 4);
-            setItemsTopSuggest(randomItemsTopSuggest);
-            //console.log(res);
-        });
-        await api.search("Nhạc Việt").then(res => {
-            const randomItemsTopSuggest1 = (res.data.data.topSuggest).slice(5, 9);
-            setItemsTopSuggest1(randomItemsTopSuggest1);
-            //console.log(res);
-        });
+        let infoAlbum = await api.getDetailPlaylist(id)
+        console.log(infoAlbum);
+        if (infoAlbum.data.aliasTitle === alias) {
+            setItemsHotSongs(infoAlbum.data.song.items)
+            setArtistAttend(infoAlbum.data.artists)
 
-        await api.getChartHome().then(res => {
-            setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
-            //console.log(res);
-        });
-        await api.getDetailPlaylist("ZFFICOO7").then(res => {
-            const itemartist1 = (res.data.data.artists).slice(0, 4);
-            const itemArtists1 = [];
-            itemartist1.map((item, index) => {
-                return (
-                    console.log(item.name),
-                    api.getArtist(item.alias).then(res => {
-                        itemArtists1.push(res.data.data);
-                        //console.log(itemArtists1);
-                    })
-                )
-            })
+            await api.search("Nhạc Việt").then(res => {
+                const randomItemsTopAlbum = (res.data.topSuggest).slice(0, 1);
+                setItemsTopAlbum(randomItemsTopAlbum)
 
-            setItemsArtist(itemArtists1);
-            console.log(itemArtists1);
-        });
-        // await api.getArtist('Hoàng Thùy Linh').then(res => {
+                const randomItemsTopSuggest = (res.data.topSuggest).slice(0, 4);
+                setItemsTopSuggest(randomItemsTopSuggest);
 
-        //     console.log(res);
-        // });
+                const randomItemsTopSuggest1 = (res.data.topSuggest).slice(5, 9);
+                setItemsTopSuggest1(randomItemsTopSuggest1);
+
+
+            });
+        }
+        else
+            navigate('/')
     }, []);
     function convertDuration(duration) {
         var min = Math.floor(duration / 60);
@@ -139,34 +127,25 @@ const Album = () => {
                     }
                 </div>
                 <div className="col-span-6">
-                    <div className="py-[24px] px-[60px]">
+                    <div className="py-[10px] px-[60px]">
                         <div className='relative group h-[60px] flex w-full rounded-[5px]'>
                             <div className="h-full  mt-[10.5px] ml-[10.5px] mb-[10.5px]">
                                 <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Bài hát</h2>
-
                             </div>
                             <div className="h-full  mt-[10.5px] ml-[51%] mb-[10.5px]">
                                 <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Album</h2>
-
                             </div>
                             <div className="h-full  mt-[10.5px] ml-[30%] mb-[10.5px] mr-[45.5px]">
                                 <h2 className="text-[10pt] font-semibold text-slate-400 truncate ...">Thời gian</h2>
-
                             </div>
                         </div>
                         <div>
                             {
-
                                 itemsHotSongs.map((item, index) => {
                                     return (
-                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]' key={index}>
-                                            <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
-                                            </img>
-
-                                            <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] cursor-pointer flex-row justify-around items-center">
-                                                <PlayArrowIcon></PlayArrowIcon>
-                                            </div>
-
+                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px] items-center ' key={index}>
+                                            <MusicNoteIcon />
+                                            <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM} />
                                             <div className='h-full w-[50%] mt-[10.5px] ml-[10.5px] mb-[10.5px]'>
                                                 <div className='text-[11pt] font-bold  truncate ...'>
                                                     {item.title}
@@ -225,7 +204,7 @@ const Album = () => {
                 </div>
                 <div className="flex flex-row ">
                     <ItemArtists
-                        artistList={itemsArtist}
+                        artistList={artistAttend}
                     >
                     </ItemArtists>
                 </div>

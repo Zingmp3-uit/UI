@@ -42,11 +42,11 @@ const MV = () => {
     // console.log(mv);
     useEffect(async () => {
         await api.getCategoryMV("IWZ9Z08I").then((data) => {
-            setCategory(data.data.data.childs)
+            setCategory(data.data.childs)
         })
         await api.getListMV(codeId, "1", "20").then((data) => {
             console.log(data.data);
-            setMv(data.data.data.items)
+            setMv(data.data.items)
         })
     }, [codeId])
 

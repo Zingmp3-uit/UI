@@ -448,38 +448,38 @@ const Discover = () => {
 
     useEffect(async () => {
         await api.getHome(1).then((data) => {
-            setSlides(data.data.data.items[0].items)
-            setRecommends(data.data.data.items[3].items)
-            setRecommendsToday(data.data.data.items[4].items)
-            setXonesCorner(data.data.data.items[5].items)
+            setSlides(data.data.items[0].items)
+            setRecommends(data.data.items[3].items)
+            setRecommendsToday(data.data.items[4].items)
+            setXonesCorner(data.data.items[5].items)
             // console.log(data.data.data);
         })
     }, [])
 
     useEffect(async () => {
         await api.getTop100().then((data) => {
-            setTop100(data.data.data[0].items)
+            setTop100(data.data[0].items)
             // console.log(data.data.data)
         })
     }, [])
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
-            setItemSongs(data.data.data.RTChart.items)
-            console.log(data.data.data)
+            setItemSongs(data.data.RTChart.items)
+            console.log(data.data)
             let top3 = []
             for (var i = 0; i < 3; i++) {
-                top3.push(data.data.data.RTChart.items[i].encodeId)
+                top3.push(data.data.RTChart.items[i].encodeId)
             }
 
             let a = []
             for (var i = 0; i < 24; i++) {
                 if (i % 2 == 0) {
                     a.push({
-                        hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
-                        'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
-                        'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
-                        'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
+                        hour: data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
+                        'top1': data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
+                        'top2': data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
+                        'top3': data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
                     })
                 }
             }
