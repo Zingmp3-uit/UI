@@ -672,7 +672,7 @@ const Discover = () => {
                                                             <img src={item.thumbnailM} alt="" />
                                                         </div>
                                                         <div className="flex flex-col  justify-center">
-                                                            <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)}>{item.title}</h5>
+                                                            <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
                                                             <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                                                 {
                                                                     item.artists.map((artist, j) => {
