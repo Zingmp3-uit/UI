@@ -29,7 +29,7 @@ const Album = () => {
     const [thumbnail, setThumbnail] = useState(null);
     const [title, setTitle] = useState(null);
 
-    const [itemsHotSongs, setItemsHotSongs] = useState([]);//
+    const [itemsHotSongs, setItemsHotSongs] = useState([]);
 
     const [itemsTopSuggest, setItemsTopSuggest] = useState([]);
     const [itemsTopSuggest1, setItemsTopSuggest1] = useState([]);
@@ -57,7 +57,7 @@ const Album = () => {
         }
         else
             navigate('/')
-    }, []);
+    }, [window.location.href]);
     function convertDuration(duration) {
         var min = Math.floor(duration / 60);
         let res;

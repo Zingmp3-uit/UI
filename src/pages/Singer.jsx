@@ -55,7 +55,7 @@ const Singer = () => {
 
     useEffect(async () => {
         getapi();
-    }, []);
+    }, [window.location.href]);
 
     function abbreviateNumber(value) {
         var newValue = value;
