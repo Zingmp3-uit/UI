@@ -218,21 +218,21 @@ const Personal = () => {
                                                             {item.artists.map((artist, j) => {
                                                                 if (j == item.artists.length - 1)
                                                                     return (
-                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]" key={j}>{artist.name}</Link>
                                                                     )
                                                                 else
                                                                     return (
-                                                                        <>
+                                                                        <div key={j}>
                                                                             <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
                                                                             <span> ,</span>
-                                                                        </>
+                                                                        </div>
                                                                     )
                                                             })}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{item.album.title}</span>
+                                                    <span className="text-[14px] text-[#737373] font-medium">{ item.album?.title}</span>
                                                 </div>
                                                 <div className="flex flex-row justify-between">
                                                     <div>

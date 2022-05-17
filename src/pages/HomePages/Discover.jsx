@@ -750,7 +750,7 @@ const Discover = () => {
                     {
                         top100.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer">
+                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer" key={index}>
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -786,8 +786,8 @@ const Discover = () => {
                 </div>
                 <div className="flex flex-row flex-wrap justify-center align-center my-4">
                     {
-                        musicPartners.map((musicPartner) => (
-                            <div className="flex w-[116px] h-[65px] bg-white rounded-lg align-center justify-center mx-2 my-4">
+                        musicPartners.map((musicPartner,index) => (
+                            <div className="flex w-[116px] h-[65px] bg-white rounded-lg align-center justify-center mx-2 my-4" key={index}>
                                 <div className="flex text-center justify-center p-2">
                                     <img className="object-scale-down w-auto h-auto" src={musicPartner.image_url} alt="" />
                                 </div>
