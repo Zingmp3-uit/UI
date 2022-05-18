@@ -36,10 +36,10 @@ const PlayMusic = (props, ref) => {
             let b = await api.getInfoSong(encodeId)
             console.log(a,b);
             setInfoAudio({
-                title: b.data.data.title,
-                artistsNames: b.data.data.artistsNames,
-                thumbnailM: b.data.data.thumbnailM,
-                urlAudio: a.data.data['128'],
+                title: b.data.title,
+                artistsNames: b.data.artistsNames,
+                thumbnailM: b.data.thumbnailM,
+                urlAudio: a.data['128'],
             })
         }
     }))

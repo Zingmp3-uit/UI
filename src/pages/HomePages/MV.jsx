@@ -42,11 +42,11 @@ const MV = () => {
     // console.log(mv);
     useEffect(async () => {
         await api.getCategoryMV("IWZ9Z08I").then((data) => {
-            setCategory(data.data.data.childs)
+            setCategory(data.data.childs)
         })
         await api.getListMV(codeId, "1", "20").then((data) => {
             console.log(data.data);
-            setMv(data.data.data.items)
+            setMv(data.data.items)
         })
     }, [codeId])
 
@@ -122,7 +122,7 @@ const MV = () => {
                                 </p>
                                 <p style={{ fontSize: '15px' }} className='text-[#B1D0E0]		 cursor-pointer hover:text-[rgb(204,116,191)]'>
                                     {item.artists.map((artist, i) => (
-                                        <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]'>
+                                        <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)]' key={i}>
                                             <Link to='' >{artist.name}</Link>
                                             {i !== item.artists.length - 1 ? <span className='text-[#B1D0E0] cursor-pointer hover:text-[rgb(204,116,191)] mr-[5px]'>,</span> : null}
                                         </span>

@@ -70,8 +70,8 @@ const Personal = () => {
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
-            setItemSongs(data.data.data.RTChart.items)
-            console.log(data.data.data.RTChart.items)
+            setItemSongs(data.data.RTChart.items)
+            console.log(data.data.RTChart.items)
         })
     }, [])
 
@@ -213,26 +213,26 @@ const Personal = () => {
                                                         <img src={item.thumbnail} alt="" />
                                                     </div>
                                                     <div>
-                                                        <h5 className="text-base cursor-default overflow-hidden" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                        <h5 className="text-base cursor-pointer overflow-hidden hover:text-[rgb(204,116,191)]" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
                                                         <span className="text-xs text-white opacity-90 overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                                             {item.artists.map((artist, j) => {
                                                                 if (j == item.artists.length - 1)
                                                                     return (
-                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                        <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]" key={j}>{artist.name}</Link>
                                                                     )
                                                                 else
                                                                     return (
-                                                                        <>
+                                                                        <div key={j}>
                                                                             <Link to={'/' + artist.alias} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
                                                                             <span> ,</span>
-                                                                        </>
+                                                                        </div>
                                                                     )
                                                             })}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{item.album.title}</span>
+                                                    <span className="text-[14px] text-[#737373] font-medium">{ item.album?.title}</span>
                                                 </div>
                                                 <div className="flex flex-row justify-between">
                                                     <div>

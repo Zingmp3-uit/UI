@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import logo from '../../../assets/Muzzi_Logo_Full.svg'
+import logo from '../../../assets/Muzzi_Logo_Full_Remade.svg'
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 //mui
@@ -68,11 +68,11 @@ const SideBar = () => {
 
     return (
         <div className="fixed top-0 bottom-0 left-0 w-[200px] shadow-xl bg-[#1A374D] text-white ">
-            <img src={'https://svgshare.com/i/gSG.svg?fbclid=IwAR0XkB3pYh0JSAF95X9jlWHCa1EaG26WPjG8T0eQnKcRF_8jW1nJS73Bm0E'} alt="" className='w-full text-center px-7 py-3' />
+            <img src={logo} alt="" className='w-full text-center px-7 py-3' />
             <div>
                 {titlePath.map((item, index) => (
                     <div key={index} >
-                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#1A374D] cursor-pointer',{'bg-[#406882]': activePath === item.path })}>
+                        <Link to={item.path} className={clsx('flex items-center pl-2 py-3 hover:bg-[#406882] cursor-pointer',{'bg-[#406882]': activePath === item.path })}>
                             {item.icon}
                             <p className='text-[18px] font-semibold'>{item.title}</p>
                         </Link>

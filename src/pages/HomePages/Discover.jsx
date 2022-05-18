@@ -448,38 +448,38 @@ const Discover = () => {
 
     useEffect(async () => {
         await api.getHome(1).then((data) => {
-            setSlides(data.data.data.items[0].items)
-            setRecommends(data.data.data.items[3].items)
-            setRecommendsToday(data.data.data.items[4].items)
-            setXonesCorner(data.data.data.items[5].items)
+            setSlides(data.data.items[0].items)
+            setRecommends(data.data.items[3].items)
+            setRecommendsToday(data.data.items[4].items)
+            setXonesCorner(data.data.items[5].items)
             // console.log(data.data.data);
         })
     }, [])
 
     useEffect(async () => {
         await api.getTop100().then((data) => {
-            setTop100(data.data.data[0].items)
+            setTop100(data.data[0].items)
             // console.log(data.data.data)
         })
     }, [])
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
-            setItemSongs(data.data.data.RTChart.items)
-            console.log(data.data.data)
+            setItemSongs(data.data.RTChart.items)
+            console.log(data.data)
             let top3 = []
             for (var i = 0; i < 3; i++) {
-                top3.push(data.data.data.RTChart.items[i].encodeId)
+                top3.push(data.data.RTChart.items[i].encodeId)
             }
 
             let a = []
             for (var i = 0; i < 24; i++) {
                 if (i % 2 == 0) {
                     a.push({
-                        hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
-                        'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
-                        'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
-                        'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
+                        hour: data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
+                        'top1': data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
+                        'top2': data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
+                        'top3': data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
                     })
                 }
             }
@@ -672,7 +672,7 @@ const Discover = () => {
                                                             <img src={item.thumbnailM} alt="" />
                                                         </div>
                                                         <div className="flex flex-col  justify-center">
-                                                            <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)}>{item.title || 'title'}</h5>
+                                                            <h5 className="text-sm overflow-hidden cursor-pointer hover:text-[rgb(204,116,191)]" onClick={() => createInfoAudio(item.encodeId)}>{item.title}</h5>
                                                             <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                                                 {
                                                                     item.artists.map((artist, j) => {
@@ -750,7 +750,7 @@ const Discover = () => {
                     {
                         top100.map((item, index) => {
                             return (
-                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer">
+                                <div className="flex flex-col pl-[32px] first:pl-0 mt-4 cursor-pointer" key={index}>
                                     <div className="group  w-52 h-52 rounded overflow-hidden relative">
                                         <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
                                         <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
@@ -786,8 +786,8 @@ const Discover = () => {
                 </div>
                 <div className="flex flex-row flex-wrap justify-center align-center my-4">
                     {
-                        musicPartners.map((musicPartner) => (
-                            <div className="flex w-[116px] h-[65px] bg-white rounded-lg align-center justify-center mx-2 my-4">
+                        musicPartners.map((musicPartner,index) => (
+                            <div className="flex w-[116px] h-[65px] bg-white rounded-lg align-center justify-center mx-2 my-4" key={index}>
                                 <div className="flex text-center justify-center p-2">
                                     <img className="object-scale-down w-auto h-auto" src={musicPartner.image_url} alt="" />
                                 </div>

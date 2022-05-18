@@ -14,8 +14,8 @@ const NewMusic = () => {
 
     useEffect(() => {
         api.getNewReleaseChart().then((data) => {
-            setListMusic(data.data.data.items)
-            console.log(data.data.data.items);
+            setListMusic(data.data.items)
+            console.log(data.data.items);
         })
     }, [])
     const formatTime = (time) => {
@@ -60,8 +60,8 @@ const NewMusic = () => {
                                     })}
                                 </div>
                             </div>
-                        </div>
-                        <p className="text-[#B1D0E0] text-[15px] col-span-3 hover:text-[rgb(204,116,191)]">{item.album?.title || "hieu"}</p>
+                        </div>  
+                        <Link to={'../'+item.album?.link.split('.html')[0]} className="text-[#B1D0E0] text-[15px] col-span-3 hover:text-[rgb(204,116,191)]">{item.album?.title || "hieu"}</Link>
                         <p className=" text-[15px] col-span-1 text-right">{formatTime(item.duration)}</p>
                     </div>
                     <hr style={{ borderTop: '1px solid #695785' }} />

@@ -2,7 +2,7 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link, useLocation
 } from "react-router-dom";
 import './App.css';
 import React, { useState, useEffect, createContext, useRef } from 'react';
@@ -24,11 +24,18 @@ import ZingChart from '../src/pages/HomePages/ZingChart'
 import Header from '../src/components/ConstComponent/Header'
 import SideBar from '../src/components/ConstComponent/SideBar'
 import PlayMusic from '../src/components/ConstComponent/PlayMusic'
-import OverLayer  from "./components/Overlayer";
+import OverLayer from "./components/Overlayer";
 
 export const MusicContext = createContext()
+
+function useQuery() {
+    const { search } = useLocation();
+    return new URLSearchParams(search);
+}
+
 const ConfigComponent = ({ children }) => {
     const [videoId, setVideoId] = useState('')
+    const query = useQuery();
     const audioRef = useRef(null)
     const playAudio = () => {
         audioRef.current.play()
@@ -40,6 +47,9 @@ const ConfigComponent = ({ children }) => {
         audioRef.current.setInfoAudio(id)
         playAudio()
     }
+    useEffect(() => {
+        createInfoAudio(query.get('encodeId'))
+    }, [query.get('encodeId')])
     return (
         <MusicContext.Provider value={{ videoId, setVideoId, playAudio, pauseAudio, createInfoAudio }}>
             <SideBar />
@@ -47,7 +57,7 @@ const ConfigComponent = ({ children }) => {
                 <div>
                     <Header />
                 </div>
-                <div className="mt-[60px] mb-[80px] ">
+                <div className="mt-[60px] mb-[120px] ">
                     {children}
                 </div>
             </div>
@@ -62,12 +72,7 @@ let path = [
         component: <ConfigComponent ><Singer /></ConfigComponent>
     },
     {
-        path: '/singer',
-        component: <ConfigComponent ><Singer /></ConfigComponent>
-
-    },
-    {
-        path: '/album',
+        path: '/album/:alias/:id',
         component: <ConfigComponent ><Album /></ConfigComponent>
     },
     // // ===================================================  home pages    ==============================================

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 //API
 import ZingAPI from "../../context/zing.context";
@@ -17,13 +18,13 @@ const Category = () => {
 
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
-            const randomItemsTopSuggest = shuffle(res.data.data.topSuggest).slice(0, 4);
+            const randomItemsTopSuggest = shuffle(res.data.topSuggest).slice(0, 4);
             setItemsTopSuggest(randomItemsTopSuggest);
             //console.log(res);
         });
 
         await api.getChartHome().then(res => {
-            setItemsHotSongs(res.data.data.weekChart.vn.items.slice(0, 15));
+            setItemsHotSongs(res.data.weekChart.vn.items.slice(0, 15));
             //console.log(res);
         });
     } 
@@ -117,7 +118,7 @@ const Category = () => {
                             {
                                 itemsHotSongs.map((item, index) => {
                                     return(
-                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]'>
+                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]' key={index}>
                                             <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
                                             </img>
 
@@ -176,6 +177,7 @@ const Category = () => {
                 }                               
             </div>
         </div>
+
     )
 }
 

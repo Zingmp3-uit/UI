@@ -25,25 +25,25 @@ const ZingChart = () => {
     // // datas.map(data => console.log(data))
     useEffect(async () => {
         await api.getChartHome().then((data) => {
-            setItemVNSongs(data.data.data.RTChart.items)
+            setItemVNSongs(data.data.RTChart.items)
             // setDatas(data.data.data.RTChart.chart.items)
-            setItemWeekVNSongs(data.data.data.weekChart.vn.items)
-            setItemWeekUSSongs(data.data.data.weekChart.us.items)
-            setItemWeekKoreaSongs(data.data.data.weekChart.korea.items)
-            console.log(data.data.data.RTChart.chart)
+            setItemWeekVNSongs(data.data.weekChart.vn.items)
+            setItemWeekUSSongs(data.data.weekChart.us.items)
+            setItemWeekKoreaSongs(data.data.weekChart.korea.items)
+            console.log(data.data.RTChart.chart)
             let top3 = []
             for (var i = 0; i < 3; i++) {
-                top3.push(data.data.data.RTChart.items[i].encodeId)
+                top3.push(data.data.RTChart.items[i].encodeId)
             }
 
             let a = []
             for (var i = 0; i < 24; i++) {
                 if (i % 2 == 0) {
                     a.push({
-                        hour: data.data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
-                        'top1': data.data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
-                        'top2': data.data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
-                        'top3': data.data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
+                        hour: data.data.RTChart.chart.items[`${top3[0]}`][i].hour + ":00",
+                        'top1': data.data.RTChart.chart.items[`${top3[0]}`][i].counter,
+                        'top2': data.data.RTChart.chart.items[`${top3[1]}`][i].counter,
+                        'top3': data.data.RTChart.chart.items[`${top3[2]}`][i].counter,
                     })
                 }
             }
