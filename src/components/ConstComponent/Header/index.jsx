@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import avatar from '../../../assets/avatar.png'
 import ZingAPI from "../../../context/zing.context";
 
@@ -24,29 +24,12 @@ const Header = () => {
     const api = new ZingAPI();
 
     const [text, setText] = useState('');
-
     const [artists, setArtists] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [songs, setSongs] = useState([]);
     const [videos, setVideos] = useState([]);
 
-    const handleSearch = async (content) => {
-        if (content && content.length > 2) {
-
-
-            let list = (await api.search(String(content))).data
-            console.log(list);
-
-            setArtists(list.artists);
-            setPlaylists(list.playlists);
-            setSongs(list.songs);
-            setVideos(list.videos);
-
-
-
-        }
-    }
-    const changeHandler = async (e) => {
+    const handleSearch = async (e) => {
         console.warn('searching...: ', e.target.value);
         let content = e.target.value;
         if (content && content.length > 2) {
@@ -65,10 +48,13 @@ const Header = () => {
             setVideos([]);
         }
     };
-    const debouncedChangeContent = useCallback(
-        debounce(changeHandler, 1000)
-        , []);
-
+    // const debouncedChangeContent = useCallback(
+    //     debounce(changeHandler, 1000)
+    //     , []);
+    const handleClick = (id) => {
+        console.log('21333123');
+        createInfoAudio(id)
+    }
     useEffect(() => {
         setText('');
 
@@ -84,7 +70,7 @@ const Header = () => {
             <div className='flex items-center w-[70%]'>
                 <ArrowBackIcon className='rounded-full hover:bg-[#1A374D] p-1 mx-1' style={{ fontSize: '40px' }} />
                 <ArrowForwardIcon className='rounded-full hover:bg-[#1A374D] p-1 mx-1' style={{ fontSize: '40px' }} />
-                <div className='w-full relative group'>
+                <div className='w-full relative group' >
                     <div className='bg-[#1A374D]  rounded-3xl px-2 flex items-center group-focus-within:rounded-b-sm group-focus-within:bg-[#5596c9]'>
                         <SearchIcon />
                         <input
@@ -96,17 +82,17 @@ const Header = () => {
                             onChange={e => setText(e.target.value)}
                             onKeyDown={e => {
                                 if (e.key === 'Enter') {
-                                    debouncedChangeContent(e)
+                                    handleSearch(e)
                                 }
                             }}
                         />
-                        <div className='w-full absolute top-10 right-0 left-0 bg-[#1A374D]  hidden  group-focus-within:block group-focus-within:bg-[#5596c9]'>
-                            <p className='my-2 mx-2 text-lg font-semibold cursor-pointer'>Các kết quả phù hợp</p>
+                        <div className='w-full absolute top-10 right-0 left-0 bg-[#1A374D]  hidden rounded-b-md  group-focus-within:block group-focus-within:bg-[#5596c9]'>
+                            <p className='py-2 mx-2 text-lg font-semibold cursor-pointer'>Các kết quả phù hợp</p>
                             {artists && artists.length > 0 ?
                                 artists.map((artist, index) => {
                                     if (artist.thumbnailM.indexOf('default') === -1 && index < 2) {
                                         return (
-                                            <Link to={'/' + artist.alias} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
+                                            <Link to={'/' + artist.alias} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
                                                 <div className='flex items-center'>
                                                     <img src={artist.thumbnailM} alt="" className='w-8 rounded-full mx-2' />
                                                     <span>{artist.name}</span>
@@ -123,7 +109,7 @@ const Header = () => {
                             {playlists.map((playlist, index) => {
                                 if (playlist.thumbnailM.indexOf('default') === -1 && index < 2) {
                                     return (
-                                        <Link to={'../' + playlist.link.split('.html')[0]} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
+                                        <Link to={'../' + playlist.link.split('.html')[0]} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
                                             <div className='flex items-center'>
                                                 <img src={playlist.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
                                                 <span>{playlist.title}</span>
@@ -135,11 +121,11 @@ const Header = () => {
                                 else
                                     return null;
                             })}
-                            {songs.map((song, index) => {
+                            {/* {songs.map((song, index) => {
                                 if (song.thumbnailM.indexOf('default') === -1 && index < 3) {
                                     return (
-                                        <div onClick={()=> createInfoAudio(song.encodeId)} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
-                                            <div className='flex items-center'>
+                                        <div onClick={() => handleClick(song.encodeId)} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
+                                            <div className='flex items-center' >
                                                 <img src={song.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
                                                 <span>{song.title}</span>
                                             </div>
@@ -149,11 +135,11 @@ const Header = () => {
                                 }
                                 else
                                     return null;
-                            })}
+                            })} */}
                             {videos.map((video, index) => {
                                 if (video.thumbnailM.indexOf('default') === -1 && index < 3) {
                                     return (
-                                        <Link to={'/music-video/'+ video.encodeId} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
+                                        <Link to={'/music-video/' + video.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
                                             <div className='flex items-center'>
                                                 <img src={video.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
                                                 <span>{video.title}</span>
