@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext  } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ZingAPI from '../../context/zing.context'
 
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
@@ -452,21 +452,21 @@ const Discover = () => {
             setRecommends(data.data.items[3].items)
             setRecommendsToday(data.data.items[4].items)
             setXonesCorner(data.data.items[5].items)
-            // console.log(data.data.data);
+            console.log(data.data.items[3].items);
         })
     }, [])
 
     useEffect(async () => {
         await api.getTop100().then((data) => {
             setTop100(data.data[0].items)
-            // console.log(data.data.data)
+            console.log(data.data.data)
         })
     }, [])
 
     useEffect(async () => {
         await api.getChartHome().then((data) => {
             setItemSongs(data.data.RTChart.items)
-            console.log(data.data)
+            // console.log(data.data)
             let top3 = []
             for (var i = 0; i < 3; i++) {
                 top3.push(data.data.RTChart.items[i].encodeId)
@@ -488,55 +488,71 @@ const Discover = () => {
             // console(data.data.data.RTChart.chart.items)
         })
     }, [])
-    
+
 
     return (
         <React.Fragment>
             <div className="px-[60px] py-8">
-                <div className="flex flex-row overflow-hidden">
+                <div className="flex flex-row">
                     {
                         slides.map((slide, index) => {
 
-                            return (
-                                <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
-                                    <div key={index} className="flex w-[373px] h-[210px] bg-white rounded-lg overflow-hidden">
-                                        <img className="w-full object-cover" src={slide.banner} alt="" />
+                            if (index < 3) {
+                                return (
+                                    <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                        <div key={index} className="flex w-[373px] h-[210px] bg-white rounded-lg overflow-hidden">
+                                            <img className="w-full object-cover" src={slide.banner} alt="" />
+                                        </div>
                                     </div>
-                                </div>
-                            )
+                                )
+                            }
                         })
                     }
                 </div>
             </div>
             <div className="px-[60px]">
                 <h3 className="text-xl text-white font-black">Có Thể Bạn Muốn Nghe</h3>
-                <div className="flex flex-row overflow-hidden">
+                <div className="flex flex-row">
                     {
                         recommends.map((item, index) => {
-                            return (
-                                <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
-                                    <div className="group  w-52 h-52 rounded overflow-hidden relative">
-                                        <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
-                                        <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
-                                            <FavoriteIcon />
-                                            <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
-                                                <PlayArrowRoundedIcon />
+                            if (index < 5) {
+                                return (
+                                    <div key={index} className="flex flex-col pl-[32px] cursor-pointer first:pl-0 mt-4">
+                                        <div className="group  w-52 h-52 rounded overflow-hidden relative">
+                                            <img className="w-full object-cover group-hover:scale-110 duration-500" src={item.thumbnail} alt="" />
+                                            <div className="p-[8px] w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
+                                                <FavoriteIcon />
+                                                <div className=" w-12 h-12 flex items-center justify-center border rounded-full">
+                                                    <PlayArrowRoundedIcon />
+                                                </div>
+                                                <MoreHorizIcon />
                                             </div>
-                                            <MoreHorizIcon />
                                         </div>
+                                        <div>
+                                            <Link to={'../' + item.link?.split('.html')[0]} className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || "hieu"}</Link>
+                                        </div>
+                                        {/* <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.link.split('.html')[0]}</h6> */}
+                                        {/* <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
+                                                {
+                                                    item.artists.map((artist, j) => {
+                                                        if (j == item.artists.length - 1)
+                                                            return (
+                                                                <Link to={'/' + artist.link} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                            )
+                                                        else
+                                                            return (
+                                                                <>
+                                                                    <Link to={'/' + artist.link} className="text-[#B1D0E0] text-[12px] hover:text-[rgb(204,116,191)]">{artist.name}</Link>
+                                                                    <span> ,</span>
+                                                                </>
+                                                            )
+                                                    })
+                                                }
+                                            </span> */}
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title}</h6>
-                                    {/* <span className="text-base text-[#797979]">
-                                        {
-                                            item.artists.map((artist, index) => {
-                                                return (
-                                                    <a className="text-[14px] text-[#797979] font-semibold no-underline hover:underline hover:text-[#7200a1] text-opacity-80" key={index}>{artist.name} </a>
-                                                )
-                                            })
-                                        }
-                                    </span> */}
-                                </div>
-                            )
+                                )
+
+                            }
                         })
                     }
                 </div>
@@ -558,7 +574,9 @@ const Discover = () => {
                                             <MoreHorizIcon />
                                         </div>
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1] cursor-pointer">{item.title}</h6>
+                                    <div>
+                                        <Link to={'../' + item.link?.split('.html')[0]} className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || "hieu"}</Link>
+                                    </div>
                                     <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "2" }} key={index}>{item.sortDescription}</span>
                                 </div>
                             )
@@ -583,7 +601,9 @@ const Discover = () => {
                                             <MoreHorizIcon />
                                         </div>
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1] cursor-pointer">{item.title}</h6>
+                                    <div>
+                                        <Link to={'../' + item.link?.split('.html')[0]} className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || "hieu"}</Link>
+                                    </div>
                                     <span className="text-[14px] text-[#797979] font-semibold no-underline text-opacity-80" key={index}>{item.sortDescription}</span>
                                 </div>
                             )
@@ -608,7 +628,9 @@ const Discover = () => {
                                             <MoreHorizIcon />
                                         </div>
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]">{item.title}</h6>
+                                    <div>
+                                        <Link to={'../' + item.link?.split('.html')[0]} className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || "hieu"}</Link>
+                                    </div>
                                     <span className="text-base text-[#797979] overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>
                                         {
                                             // item.singers.map((singer, index) => {
@@ -761,7 +783,9 @@ const Discover = () => {
                                             <MoreHorizIcon />
                                         </div>
                                     </div>
-                                    <h6 className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]">{item.title}</h6>
+                                    <div>
+                                        <Link to={'../' + item.link?.split('.html')[0]} className="text-base font-black text-white mt-[8px] hover:text-[#7200a1]  overflow-hidden" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || "hieu"}</Link>
+                                    </div>
                                     {/* <span className="text-base">
                                         {
                                             item.artists.map((artist, index) => {
@@ -786,7 +810,7 @@ const Discover = () => {
                 </div>
                 <div className="flex flex-row flex-wrap justify-center align-center my-4">
                     {
-                        musicPartners.map((musicPartner,index) => (
+                        musicPartners.map((musicPartner, index) => (
                             <div className="flex w-[116px] h-[65px] bg-white rounded-lg align-center justify-center mx-2 my-4" key={index}>
                                 <div className="flex text-center justify-center p-2">
                                     <img className="object-scale-down w-auto h-auto" src={musicPartner.image_url} alt="" />

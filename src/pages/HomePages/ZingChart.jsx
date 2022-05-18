@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext  } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ZingAPI from "../../context/zing.context";
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
@@ -137,7 +137,7 @@ const ZingChart = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <span className="text-[14px] text-[#737373] font-medium">{item.album.title}</span>
+                                                <Link to={'../' + item.album?.link.split('.html')[0]} className="text-[14px] text-[#737373] font-medium hover:text-[rgb(204,116,191)]" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.album?.title || "hieu"}</Link>
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <div>
@@ -148,7 +148,7 @@ const ZingChart = () => {
                                         </div>
                                     )
                                 }
-                                else {  
+                                else {
                                     return (
                                         show &&
                                         <div key={index} className="p-[10px] grid grid-cols-[3fr_16fr_16fr_3fr] items-center border-t-[0.5px] border-[#e8e8e8] border-opacity-5">
@@ -195,7 +195,7 @@ const ZingChart = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <span className="text-[14px] text-[#737373] font-medium">{item.album.title}</span>
+                                                <Link to={'../' + item.album?.link.split('.html')[0]} className="text-[14px] text-[#737373] font-medium hover:text-[rgb(204,116,191)]" style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.album?.title || "hieu"}</Link>
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <div>
@@ -366,7 +366,7 @@ const ZingChart = () => {
                                                                 </div>
                                                                 <div></div>
                                                                 <div>
-                                                                    <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)} style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || 'title'}</h5>
+                                                                    <h5 className="text-sm overflow-hidden cursor-default" onClick={() => createInfoAudio(item.encodeId)} style={{ "display": "-webkit-box", "-webkit-box-orient": "vertical", "-webkit-line-clamp": "1" }}>{item.title || 'title'} </h5>
                                                                     {
                                                                         item.artists.map((artist, j) => {
                                                                             if (j == item.artists.length - 1)

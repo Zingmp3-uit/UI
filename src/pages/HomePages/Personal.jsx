@@ -232,7 +232,7 @@ const Personal = () => {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[14px] text-[#737373] font-medium">{ item.album?.title}</span>
+                                                    <Link to={'../'+item.album?.link.split('.html')[0]} className="text-[14px] text-[#737373] font-medium  hover:text-[rgb(204,116,191)]">{item.album?.title || "hieu"}</Link>
                                                 </div>
                                                 <div className="flex flex-row justify-between">
                                                     <div>
