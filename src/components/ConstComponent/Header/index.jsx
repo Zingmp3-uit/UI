@@ -106,51 +106,60 @@ const Header = () => {
                                 })
                                 : null
                             }
-                            {playlists.map((playlist, index) => {
-                                if (playlist.thumbnailM.indexOf('default') === -1 && index < 2) {
-                                    return (
-                                        <Link to={'../' + playlist.link.split('.html')[0]} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
-                                            <div className='flex items-center'>
-                                                <img src={playlist.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
-                                                <span>{playlist.title}</span>
-                                            </div>
-                                            <AlbumIcon className='w-8 mx-2' />
-                                        </Link>
-                                    )
-                                }
-                                else
-                                    return null;
-                            })}
-                            {songs.map((song, index) => {
-                                if (song.thumbnailM.indexOf('default') === -1 && index < 3) {
-                                    return (
-                                        <Link to={window.location.pathname+'?encodeId='+song.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
-                                            <div className='flex items-center' >
-                                                <img src={song.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
-                                                <span>{song.title}</span>
-                                            </div>
-                                            <MusicNoteIcon className='w-8 mx-2' />
-                                        </Link>
-                                    )
-                                }
-                                else
-                                    return null;
-                            })}
-                            {videos.map((video, index) => {
-                                if (video.thumbnailM.indexOf('default') === -1 && index < 3) {
-                                    return (
-                                        <Link to={'/music-video/' + video.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
-                                            <div className='flex items-center'>
-                                                <img src={video.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
-                                                <span>{video.title}</span>
-                                            </div>
-                                            <MovieIcon className='w-8 mx-2' />
-                                        </Link>
-                                    )
-                                }
-                                else
-                                    return null;
-                            })}
+                            {playlists && playlists.length > 0 ?
+                                playlists.map((playlist, index) => {
+                                    if (playlist.thumbnailM.indexOf('default') === -1 && index < 2) {
+                                        return (
+                                            <Link to={'../' + playlist.link.split('.html')[0]} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
+                                                <div className='flex items-center'>
+                                                    <img src={playlist.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
+                                                    <span>{playlist.title}</span>
+                                                </div>
+                                                <AlbumIcon className='w-8 mx-2' />
+                                            </Link>
+                                        )
+                                    }
+                                    else
+                                        return null;
+                                })
+                                : null
+                            }
+                            {songs && songs.length > 0 ?
+                                songs.map((song, index) => {
+                                    if (song.thumbnailM.indexOf('default') === -1 && index < 3) {
+                                        return (
+                                            <Link to={window.location.pathname + '?encodeId=' + song.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
+                                                <div className='flex items-center' >
+                                                    <img src={song.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
+                                                    <span>{song.title}</span>
+                                                </div>
+                                                <MusicNoteIcon className='w-8 mx-2' />
+                                            </Link>
+                                        )
+                                    }
+                                    else
+                                        return null;
+                                })
+                                : null
+                            }
+                            {videos && videos.length > 0 ?
+                                videos.map((video, index) => {
+                                    if (video.thumbnailM.indexOf('default') === -1 && index < 3) {
+                                        return (
+                                            <Link to={'/music-video/' + video.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1'>
+                                                <div className='flex items-center'>
+                                                    <img src={video.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
+                                                    <span>{video.title}</span>
+                                                </div>
+                                                <MovieIcon className='w-8 mx-2' />
+                                            </Link>
+                                        )
+                                    }
+                                    else
+                                        return null;
+                                })
+                                : null
+                            }
                         </div>
                     </div>
                 </div>
