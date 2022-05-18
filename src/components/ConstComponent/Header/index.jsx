@@ -121,21 +121,21 @@ const Header = () => {
                                 else
                                     return null;
                             })}
-                            {/* {songs.map((song, index) => {
+                            {songs.map((song, index) => {
                                 if (song.thumbnailM.indexOf('default') === -1 && index < 3) {
                                     return (
-                                        <div onClick={() => handleClick(song.encodeId)} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
+                                        <Link to={window.location.pathname+'?encodeId='+song.encodeId} key={index} className='flex items-center justify-between my-1 hover:bg-[#406882] py-1 cursor-pointer'>
                                             <div className='flex items-center' >
                                                 <img src={song.thumbnailM} alt="" className='w-8 rounded-sm mx-2' />
                                                 <span>{song.title}</span>
                                             </div>
                                             <MusicNoteIcon className='w-8 mx-2' />
-                                        </div>
+                                        </Link>
                                     )
                                 }
                                 else
                                     return null;
-                            })} */}
+                            })}
                             {videos.map((video, index) => {
                                 if (video.thumbnailM.indexOf('default') === -1 && index < 3) {
                                     return (
