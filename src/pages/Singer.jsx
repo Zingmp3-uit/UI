@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 //API
 import ZingAPI from "../context/zing.context";
 //MUI
@@ -8,6 +8,8 @@ import PeopleIcon from '@material-ui/icons/People';
 //Components
 import ItemAlbum from '../components/ItemAlbum/ItemAlbum';
 import SingerLoader from '../components/SkeletonLoader/SingerLoader';
+import ItemMVArtist from '../components/ItemMVArtist/ItemMVArtist';
+import { MusicContext } from '../App';
 //Others
 import { useParams } from "react-router-dom";
 
@@ -25,6 +27,8 @@ const Singer = () => {
     const [albums, setAlbums] = useState([]);
 
     const [MVs, setMVs] = useState([]);
+
+    const { createInfoAudio } = useContext(MusicContext);
 
     const getapi = async () => {
         await api.getArtist(param.alias).then(res => {
@@ -85,6 +89,28 @@ const Singer = () => {
 
     var randomSongNum = Math.floor(Math.random() * songs.length);
 
+    var randomEncodeId;
+
+    for (var i = 0; i < songs.length; i++) {
+        if (randomSongNum == i) {
+            randomEncodeId = songs[i].encodeId;
+        }
+    }
+
+    function convertSingleToSong(singleTitle) {
+        if (singles_EPs.length != 0) {
+            for (var i = 0; i < songs.length; i++) {
+                if (singleTitle.includes(songs[i].title)) {
+                    createInfoAudio(songs[i].encodeId);
+                }
+            }
+        }
+    }
+
+    function playPlaylist() {
+        createInfoAudio(songs[Math.floor(Math.random() * songs.length)].encodeId);
+    }
+
     function displaySections() {
         return (
             <div className='absolute top-[95%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col container mx-auto w-[90%] h-full'>
@@ -97,7 +123,7 @@ const Singer = () => {
                         </h1>
                         <div className='relative mt-[1.5%] w-full h-[250px]'>
                             <div className='absolute w-[250px] h-full'>
-                                <img className='w-full h-full scale-[90%] rounded-[3%]' src={songs[randomSongNum].thumbnailM}>
+                                <img className='w-full h-full scale-[90%] rounded-[3%] hover:brightness-50 cursor-pointer' src={songs[randomSongNum].thumbnailM} onClick={() => createInfoAudio(randomEncodeId)}>
                                 </img>
                             </div>
 
@@ -106,11 +132,11 @@ const Singer = () => {
                                 {
                                     songs.map((item, index) => {
                                         return(
-                                            <div className='relative group h-[62.5px] hover:bg-[#406882] flex w-full rounded-[5px]' key={index}>
+                                            <div className='relative group h-[62.5px] hover:bg-[#406882] flex w-full rounded-[5px] cursor-pointer' key={index} onClick={() => createInfoAudio(item.encodeId)}>
                                                 <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
                                                 </img>
 
-                                                <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] cursor-pointer flex-row justify-around items-center">
+                                                <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] flex-row justify-around items-center">
                                                     <PlayArrowIcon></PlayArrowIcon>
                                                 </div>
 
@@ -194,17 +220,24 @@ const Singer = () => {
                     </ItemAlbum>
                 </div>
 
-                <div>
+                <div className='pt-[3%]'>
                     {
-                        MVs.map((item, index) => {
-                            return (
-                                <div>
-                                    "MV"
-                                    {item.title}
-                                </div>
-                            )
-                        })
+                        MVs.length == 0 ? ""
+                            :
+                            <h1 className='text-white text-[16pt] font-bold'>
+                                MV
+                            </h1>
                     }
+
+                    <ItemMVArtist
+                        mvsList={MVs}
+                    >
+                    </ItemMVArtist>
+                </div>
+
+                <div>
+                    <div className='w-full h-[200px]'>
+                    </div>
                 </div>
             </div>
         )
@@ -237,7 +270,7 @@ const Singer = () => {
                                 <div className='h-[5px]'></div>
 
                                 <div className='relative w-[70%] h-1/4 overflow-hidden'>
-                                    <div className='absolute top-[15%] w-[47.5%] h-[70%] bg-[#6998AB] rounded-full'>
+                                    <div className='absolute top-[15%] w-[47.5%] h-[70%] bg-[#6998AB] hover:bg-[#406882] active:bg-[#1A374D] cursor-pointer rounded-full' onClick={playPlaylist}>
                                         <div className='flex w-full h-full justify-center items-center text-sm font-semibold truncate ...'>
                                             <PlayArrowIcon></PlayArrowIcon>
 
@@ -266,8 +299,14 @@ const Singer = () => {
                                 singles_EPs.length == 0 ? ""
                                     :
                                     <div className='absolute bottom-0 h-[28%] w-[60%] overflow-hidden'>
-                                        <img className='absolute h-full object-cover rounded-[5px]' src={singles_EPs[0].thumbnailM}>
-                                        </img>
+                                        <div className='group cursor-pointer' onClick={() => convertSingleToSong(singles_EPs[0].title)}>
+                                            <img className='absolute h-full object-cover rounded-[5px] group-hover:brightness-50' src={singles_EPs[0].thumbnailM}>
+                                            </img>
+
+                                            <div className='absolute top-[50%] left-[30px] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] cursor-pointer flex-row justify-around items-center'>
+                                                <PlayArrowIcon></PlayArrowIcon>
+                                            </div>
+                                        </div>
 
                                         <div className='absolute right-0 h-full w-[85%]'>
                                             <div className='absolute w-full text-[8pt] font-bold truncate ...'>
