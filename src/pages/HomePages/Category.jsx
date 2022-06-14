@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 //API
 import ZingAPI from "../../context/zing.context";
 //MUI
@@ -8,6 +8,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import AlbumLoader from "../../components/SkeletonLoader/AlbumLoader";
 import SongLoader from "../../components/SkeletonLoader/SongLoader";
 import ItemAlbum from '../../components/ItemAlbum/ItemAlbum';
+import { MusicContext } from '../../App';
 
 const Category = () => {
     const api = new ZingAPI();
@@ -15,6 +16,8 @@ const Category = () => {
     const[itemsTopSuggest, setItemsTopSuggest] = useState([]);
 
     const[itemsHotSongs, setItemsHotSongs] = useState([]);
+
+    const { createInfoAudio } = useContext(MusicContext);
 
     const getapi = async () => {
         await api.search("Nhạc Việt").then(res => {
@@ -118,8 +121,8 @@ const Category = () => {
                             {
                                 itemsHotSongs.map((item, index) => {
                                     return(
-                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px]' key={index}>
-                                            <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
+                                        <div className='relative group h-[60px] hover:bg-[#406882] flex w-full rounded-[5px] cursor-pointer' key={index} onClick={() => createInfoAudio(item.encodeId)}>
+                                            <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] group-hover:brightness-[60%]' src={item.thumbnailM}>
                                             </img>
 
                                             <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] cursor-pointer flex-row justify-around items-center">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 //MUI
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -14,21 +14,25 @@ function ItemAlbum(props) {
         albumsList.map((item, index) => {
             return (
                 <div className='w-full h-full'>
-                    <div className='relative group rounded-[3%] overflow-hidden'>
-                        <img className='group-hover:scale-110 group-hover:brightness-50 duration-500 object-cover rounded-[3%]' src={item.thumbnailM}>
-                        </img>
+                    <div className='relative group rounded-[3%] overflow-hidden cursor-pointer'>
+                        <a href={item.link.split('.html')[0]}>
+                            <img className='group-hover:scale-110 group-hover:brightness-50 duration-500 object-cover rounded-[3%]' src={item.thumbnailM}>
+                            </img>
 
-                        <div className="absolute p-[8px] w-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
-                            <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                            <div className="w-12 h-12 flex items-center justify-center border rounded-full">
-                                <PlayArrowIcon></PlayArrowIcon>
-                            </div>
-                            <MoreHorizOutlinedIcon></MoreHorizOutlinedIcon>                                       
-                        </div>                             
+                            <div className="absolute p-[8px] w-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] hidden group-hover:flex flex-row justify-around items-center">
+                                <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                                <div className="w-12 h-12 flex items-center justify-center border rounded-full">
+                                    <PlayArrowIcon></PlayArrowIcon>
+                                </div>
+                                <MoreHorizOutlinedIcon></MoreHorizOutlinedIcon>                                       
+                            </div>  
+                        </a>                           
                     </div>
 
                     <div className='pt-[2%] font-bold text-[12pt] truncate ... hover:text-[#B1D0E0] hover:cursor-pointer'>
-                        {item.title}
+                        <a href={item.link.split('.html')[0]}>
+                            {item.title}
+                        </a>
                     </div>
 
                     {
