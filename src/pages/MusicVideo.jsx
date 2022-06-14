@@ -59,9 +59,9 @@ const MusicVideo = () => {
                     </span>
                 </div>
                 <div className='flex items-center'>
-                    <span className='border-solid border-2 rounded-full border-zinc-700 p-2'>
+                    <Link to={'/mv/IWZ9Z08I'} className='border-solid border-2 rounded-full border-zinc-700 p-2'>
                         <CloseIcon />
-                    </span>
+                    </Link>
                 </div>
             </div>
             <div className='px-4 '>
