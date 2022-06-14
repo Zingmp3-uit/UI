@@ -13,6 +13,10 @@ import { MusicContext } from '../App';
 //Others
 import { useParams } from "react-router-dom";
 
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
+
+
 const Singer = () => {
     const param = useParams();
 
@@ -116,92 +120,93 @@ const Singer = () => {
             <div className='absolute top-[95%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col container mx-auto w-[90%] h-full'>
                 {
                     songs.length == 0 ? ""
-                    :
-                    <div className='pt-[5%]'>
-                        <h1 className='text-white text-[16pt] font-bold'>
-                            Bài Hát Nổi Bật
-                        </h1>
-                        <div className='relative mt-[1.5%] w-full h-[250px]'>
-                            <div className='absolute w-[250px] h-full'>
-                                <img className='w-full h-full scale-[90%] rounded-[3%] hover:brightness-50 cursor-pointer' src={songs[randomSongNum].thumbnailM} onClick={() => createInfoAudio(randomEncodeId)}>
-                                </img>
-                            </div>
+                        :
+                        <div className='pt-[5%]'>
+                            <h1 className='text-white text-[16pt] font-bold'>
+                                Bài Hát Nổi Bật
+                            </h1>
+                            <div className='relative mt-[1.5%] w-full h-[250px]'>
+                                <div className='absolute w-[250px] h-full'>
+                                    <img className='w-full h-full scale-[90%] rounded-[3%] hover:brightness-50 cursor-pointer' src={songs[randomSongNum].thumbnailM} onClick={() => createInfoAudio(randomEncodeId)}>
+                                    </img>
+                                </div>
+                                    <div className='absolute right-0 w-[70%] h-full  ...'>
+                                        <div className='absolute w-full h-full grid grid-cols-1 gap-y-0'>
+                                <SimpleBar style={{ maxHeight: '270px' }}>
+                                            {
+                                                songs.map((item, index) => {
+                                                    return (
+                                                        <div className='relative group h-[62.5px] hover:bg-[#406882] flex w-full rounded-[5px] cursor-pointer' key={index} onClick={() => createInfoAudio(item.encodeId)}>
+                                                            <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
+                                                            </img>
 
-                            <div className='absolute right-0 w-[70%] h-full overflow-auto ...'>
-                                <div className='absolute w-full h-full grid grid-cols-1 gap-y-0'>
-                                {
-                                    songs.map((item, index) => {
-                                        return(
-                                            <div className='relative group h-[62.5px] hover:bg-[#406882] flex w-full rounded-[5px] cursor-pointer' key={index} onClick={() => createInfoAudio(item.encodeId)}>
-                                                <img className='mt-[10.5px] ml-[10.5px] object-cover h-[65%] rounded-[5px] cursor-pointer group-hover:brightness-[60%]' src={item.thumbnailM}>
-                                                </img>
+                                                            <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] flex-row justify-around items-center">
+                                                                <PlayArrowIcon></PlayArrowIcon>
+                                                            </div>
 
-                                                <div className="absolute left-[30px] top-[50%] translate-y-[-50%] translate-x-[-50%] hidden group-hover:flex hover:brightness-[90%] flex-row justify-around items-center">
-                                                    <PlayArrowIcon></PlayArrowIcon>
-                                                </div>
+                                                            <div className='h-full w-[50%] mt-[10.5px] ml-[10.5px] mb-[10.5px]'>
+                                                                <div className='text-[11pt] font-bold  truncate ...'>
+                                                                    {item.title}
+                                                                </div>
 
-                                                <div className='h-full w-[50%] mt-[10.5px] ml-[10.5px] mb-[10.5px]'>
-                                                    <div className='text-[11pt] font-bold  truncate ...'>
-                                                        {item.title}
-                                                    </div>
-
-                                                    <div className='text-[10pt] font-semibold text-slate-400 truncate ...'>
-                                                        <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[0].alias}>
-                                                        {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name}
-                                                        </a>
-                                                        {
-                                                            item.artists.length == 1 ? ""
-                                                            :
-                                                            <>
-                                                            <a>, </a>
-                                                            {
-                                                                item.artists.length == 2 ? 
-                                                                <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
-                                                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
-                                                                </a>
-                                                                :
-                                                                <>
-                                                                    <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
-                                                                    {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                                <div className='text-[10pt] font-semibold text-slate-400 truncate ...'>
+                                                                    <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[0].alias}>
+                                                                        {item.artists[0].spotlight == true ? item.artists[0].name + "★" : item.artists[0].name}
                                                                     </a>
+                                                                    {
+                                                                        item.artists.length == 1 ? ""
+                                                                            :
+                                                                            <>
+                                                                                <a>, </a>
+                                                                                {
+                                                                                    item.artists.length == 2 ?
+                                                                                        <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                                                            {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                                                        </a>
+                                                                                        :
+                                                                                        <>
+                                                                                            <a className='hover:underline hover:text-[#B1D0E0] cursor-pointer' href={item.artists[1].alias}>
+                                                                                                {item.artists[1].spotlight == true ? item.artists[1].name + "★" : item.artists[1].name}
+                                                                                            </a>
 
-                                                                    <a>,...</a>
-                                                                </>
-                                                            }
-                                                            </>
-                                                        }                                                        
-                                                    </div>
-                                                </div>
+                                                                                            <a>,...</a>
+                                                                                        </>
+                                                                                }
+                                                                            </>
+                                                                    }
+                                                                </div>
+                                                            </div>
 
-                                                <div className="absolute right-[45.5px] top-[50%] translate-y-[-50%] translate-x-[100%] flex-row font-semibold text-[10pt] text-slate-400">
-                                                {
-                                                    convertDuration(item.duration)
-                                                }
-                                                </div>                                            
-                                            </div>
-                                        )
-                                    })
-                                }                                    
-                                </div>                                
+                                                            <div className="absolute right-[45.5px] top-[50%] translate-y-[-50%] translate-x-[100%] flex-row font-semibold text-[10pt] text-slate-400">
+                                                                {
+                                                                    convertDuration(item.duration)
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                </SimpleBar>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
-                    </div>
                 }
 
                 <div className='pt-[3%]'>
                     {
                         singles_EPs.length == 0 ? ""
-                        :
-                        <h1 className='text-white text-[16pt] font-bold'>
-                            Single & EP
-                        </h1>
+                            :
+                            <h1 className='text-white text-[16pt] font-bold'>
+                                Single & EP
+                            </h1>
                     }
 
                     <ItemAlbum
                         albumsList={singles_EPs}
                         isSubtitleClickable={false}
                     >
-                    </ItemAlbum>                    
+                    </ItemAlbum>
                 </div>
 
                 <div className='pt-[3%]'>
@@ -328,9 +333,9 @@ const Singer = () => {
             </div>
 
             <div className='w-[90%] h-full mx-auto'>
-            {
-                displaySections()
-            }
+                {
+                    displaySections()
+                }
             </div>
         </div>
 
