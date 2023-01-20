@@ -459,7 +459,7 @@ const Discover = () => {
     useEffect(async () => {
         await api.getTop100().then((data) => {
             setTop100(data.data[0].items)
-            console.log(data.data.data)
+            console.log(data)
         })
     }, [])
 
@@ -513,7 +513,7 @@ const Discover = () => {
             <div className="px-[60px]">
                 <h3 className="text-xl text-white font-black">Có Thể Bạn Muốn Nghe</h3>
                 <div className="flex flex-row">
-                    {
+                    {Array.isArray(recommends)&& recommends.length >0 &&
                         recommends.map((item, index) => {
                             if (index < 5) {
                                 return (
@@ -560,7 +560,7 @@ const Discover = () => {
             <div className="px-[60px] py-[24px]">
                 <h3 className="text-xl text-white font-black">Lựa Chọn Hôm Nay</h3>
                 <div className="flex flex-row">
-                    {
+                    {Array.isArray(recommendstoday)&& recommendstoday.length >0 &&
                         recommendstoday.map((item, index) => {
                             return (
                                 <div key={index} className="flex flex-col pl-[32px] first:pl-0 mt-4">
